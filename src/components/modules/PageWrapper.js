@@ -14,6 +14,9 @@ function PageWrapper(props) {
         max-width: ${maxWidth};
         margin: ${isMobile ? '56px' : '64px'} auto 0 auto;
         min-height: calc(100vh - ${isMobile ? '140px' : '128px'});
+        display:flex;
+        align-items: center;
+        justify-content: center;
     `
 
     return (
@@ -21,7 +24,7 @@ function PageWrapper(props) {
             backgroundColor: props.backgroundColor ? props.backgroundColor : 'none'
         }}>
             <Wrapper className={props.className}>
-                {props.child}
+                {props.children}
             </Wrapper>
         </Container>
     )

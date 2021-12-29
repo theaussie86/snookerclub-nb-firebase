@@ -13,7 +13,7 @@ export default function Datenschutz() {
         }
     `
     return (
-        <PageWrapper child={
+        <PageWrapper>
             <PageContainer className='datenschutz white'>
                 <Container>
                     <Typography variant='h2' componente='h1' gutterBottom={true}>Datenschutz</Typography>
@@ -52,15 +52,16 @@ export default function Datenschutz() {
                     </Typography>
                     <Typography paragraph={true}>Die betroffenen Personen werden zusammenfassend als „Nutzer“ bezeichnet.</Typography>
                     <Typography paragraph={true}>
-                        <strong>Rechtsgrundlagen der Verarbeitung personenbezogener Daten</strong>
+                        <strong>Rechtsgrundlagen der Verarbeitung personenbezogener Daten</strong><br />
                         Nachfolgend Informieren wir Sie über die Rechtsgrundlagen der Verarbeitung personenbezogener Daten:</Typography>
-                    <ol style={{ margin: "10px 0px", padding: "15px" }}>
-                        <li>Wenn wir Ihre Einwilligung für die Verarbeitung personenbezogenen Daten eingeholt haben, ist Art. 6 Abs. 1 S. 1 lit. a) DS-GVO Rechtsgrundlage.</li>
-                        <li>Ist die Verarbeitung zur Erfüllung eines Vertrags oder zur Durchführung vorvertraglicher Maßnahmen erforderlich, die auf Ihre Anfrage hin erfolgen, so ist Art. 6 Abs. 1 S. 1 lit. b) DS-GVO Rechtsgrundlage.</li>
-                        <li>Ist die Verarbeitung zur Erfüllung einer rechtlichen Verpflichtung erforderlich, der wir unterliegen (z.B. gesetzliche Aufbewahrungspflichten), so ist Art. 6 Abs. 1 S. 1 lit. c) DS-GVO Rechtsgrundlage.</li>
-                        <li>Ist die Verarbeitung erforderlich, um lebenswichtige Interessen der betroffenen Person oder einer anderen natürlichen Person zu schützen, so ist Art. 6 Abs. 1 S. 1 lit. d) DS-GVO Rechtsgrundlage.</li>
-                        <li>Ist die Verarbeitung zur Wahrung unserer oder der berechtigten Interessen eines Dritten erforderlich und überwiegen diesbezüglich Ihre Interessen oder Grundrechte und Grundfreiheiten nicht, so ist Art. 6 Abs. 1 S. 1 lit. f) DS-GVO Rechtsgrundlage.</li>
-                    </ol>
+                    <Typography>
+                        <ol style={{ margin: "10px 0px", padding: "15px" }}>
+                            <li>Wenn wir Ihre Einwilligung für die Verarbeitung personenbezogenen Daten eingeholt haben, ist Art. 6 Abs. 1 S. 1 lit. a) DS-GVO Rechtsgrundlage.</li>
+                            <li>Ist die Verarbeitung zur Erfüllung eines Vertrags oder zur Durchführung vorvertraglicher Maßnahmen erforderlich, die auf Ihre Anfrage hin erfolgen, so ist Art. 6 Abs. 1 S. 1 lit. b) DS-GVO Rechtsgrundlage.</li>
+                            <li>Ist die Verarbeitung zur Erfüllung einer rechtlichen Verpflichtung erforderlich, der wir unterliegen (z.B. gesetzliche Aufbewahrungspflichten), so ist Art. 6 Abs. 1 S. 1 lit. c) DS-GVO Rechtsgrundlage.</li>
+                            <li>Ist die Verarbeitung erforderlich, um lebenswichtige Interessen der betroffenen Person oder einer anderen natürlichen Person zu schützen, so ist Art. 6 Abs. 1 S. 1 lit. d) DS-GVO Rechtsgrundlage.</li>
+                            <li>Ist die Verarbeitung zur Wahrung unserer oder der berechtigten Interessen eines Dritten erforderlich und überwiegen diesbezüglich Ihre Interessen oder Grundrechte und Grundfreiheiten nicht, so ist Art. 6 Abs. 1 S. 1 lit. f) DS-GVO Rechtsgrundlage.</li>
+                        </ol></Typography>
                     <Typography paragraph={true}>
                         <strong>Weitergabe personenbezogener Daten an Dritte und Auftragsverarbeiter</strong><br />
                         Ohne Ihre Einwilligung geben wir grundsätzlich keine Daten an Dritte weiter. Sollte dies doch der Fall sein, dann erfolgt die Weitergabe auf der Grundlage der zuvor genannten Rechtsgrundlagen z.B. bei der Weitergabe von Daten an Online-Paymentanbieter zur Vertragserfüllung oder aufgrund gerichtlicher Anordnung oder wegen einer gesetzlichen Verpflichtung zur Herausgabe der Daten zum Zwecke der Strafverfolgung, zur Gefahrenabwehr oder zur Durchsetzung der Rechte am geistigen Eigentum.<br />
@@ -81,7 +82,7 @@ export default function Datenschutz() {
                     <Typography paragraph={true}>
                         <strong>Bereitstellung unserer Website und Erstellung von Logfiles</strong>
                     </Typography>
-                    <Typography paragraph={true}>
+                    <Typography>
                         <ol style={{ margin: "10px 0px", padding: "15px" }}>
                             <li>Wenn Sie unsere Webseite lediglich informatorisch nutzen (also keine Registrierung und auch keine anderweitige Übermittlung von Informationen), erheben wir nur die personenbezogenen Daten, die Ihr Browser an unseren Server übermittelt. Wenn Sie unsere Website betrachten möchten, erheben wir die folgenden Daten:
                                 <ul>
@@ -106,7 +107,7 @@ export default function Datenschutz() {
                     <Typography paragraph={true}>
                         <strong>Cookies</strong>
                     </Typography>
-                    <Typography paragraph={true}>
+                    <Typography>
                         <ol style={{ margin: "10px 0px", padding: "15px" }}>
                             <li>Wir verwenden sog. Cookies bei Ihrem Besuch unserer Website. Cookies sind kleine Textdateien, die Ihr Internet-Browser auf Ihrem Rechner ablegt und speichert. Wenn Sie unsere Website erneut aufrufen, geben diese Cookies Informationen ab, um Sie automatisch wiederzuerkennen. Die so erlangten Informationen dienen dem Zweck, unsere Webangebote technisch und wirtschaftlich zu optimieren und Ihnen einen leichteren und sicheren Zugang auf unsere Website zu ermöglichen. Wir informieren Sie dazu beim Aufruf unserer Website mittels eines Hinweises auf unsere Datenschutzerklärung über die Verwendung von Cookies zu den zuvor genannten Zwecken und wie Sie dieser widersprechen bzw. deren Speicherung verhindern können („Opt-out“). Unsere Website nutzt Session-Cookies, persistente Cookies und Cookies von Drittanbietern:<br /><br />
                                 <ul>
@@ -124,7 +125,7 @@ export default function Datenschutz() {
                     <Typography paragraph={true}>
                         <strong>Abwicklung von Verträgen</strong>
                     </Typography>
-                    <Typography paragraph={true}>
+                    <Typography>
                         <ol style={{ margin: "10px 0px", padding: "15px" }}>
                             <li>Wir verarbeiten Bestandsdaten (z.B. Unternehmen, Titel/akademischer Grad, Namen und Adressen sowie Kontaktdaten von Nutzern, E-Mail), Vertragsdaten (z.B. in Anspruch genommene Leistungen, Namen von Kontaktpersonen) und Zahlungsdaten (z.B. Bankverbindung, Zahlungshistorie) zwecks Erfüllung unserer vertraglichen Verpflichtungen (Kenntnis, wer Vertragspartner ist; Begründung, inhaltliche Ausgestaltung und Abwicklung des Vertrags; Überprüfung auf Plausibilität der Daten) und Serviceleistungen (z.B. Kontaktaufnahme des Kundenservice) gem. Art. 6 Abs. 1 S. 1 lit b) DS-GVO. Die in Onlineformularen als verpflichtend gekennzeichneten Eingaben, sind für den Vertragsschluss erforderlich.<br /><br /></li>
                             <li>Eine Weitergabe dieser Daten an Dritte erfolgt grundsätzlich nicht, außer sie ist zur Verfolgung unserer Ansprüche (z.B. Übergabe an Rechtsanwalt zum Inkasso) oder zur Erfüllung des Vertrags (z.B. Übergabe der Daten an Zahlungsanbieter) erforderlich oder es besteht hierzu besteht eine gesetzliche Verpflichtung gem. Art. 6 Abs. 1 S. 1 lit. c) DS-GVO.<br /><br /></li>
@@ -134,7 +135,7 @@ export default function Datenschutz() {
                     <Typography paragraph={true}>
                         <strong>Kontaktaufnahme per Kontaktformular / E-Mail / Fax / Post</strong>
                     </Typography>
-                    <Typography paragraph={true}>
+                    <Typography>
                         <ol style={{ margin: "10px 0px", padding: "15px" }}>
                             <li>Bei der Kontaktaufnahme mit uns per Kontaktformular, Fax, Post oder E-Mail werden Ihre Angaben zum Zwecke der Abwicklung der Kontaktanfrage verarbeitet.<br /><br /></li>
                             <li>Rechtsgrundlage für die Verarbeitung der Daten ist bei Vorliegen einer Einwilligung von Ihnen Art. 6 Abs. 1 S. 1 lit. a) DS-GVO. Rechtsgrundlage für die Verarbeitung der Daten, die im Zuge einer Kontaktanfrage oder E-Mail, eines Briefes oder Faxes übermittelt werden, ist Art. 6 Abs. 1 S. 1 lit. f) DS-GVO. Der Verantwortliche hat ein berechtigtes Interesse an der Verarbeitung und Speicherung der Daten, um Anfragen der Nutzer beantworten zu können, zur Beweissicherung aus Haftungsgründen und um ggf. seiner gesetzlichen Aufbewahrungspflichten bei Geschäftsbriefen nachkommen zu können. Zielt der Kontakt auf den Abschluss eines Vertrages ab, so ist zusätzliche Rechtsgrundlage für die Verarbeitung Art. 6 Abs. 1 S. 1 lit. b) DS-GVO.<br /><br /></li>
@@ -145,7 +146,7 @@ export default function Datenschutz() {
                     <Typography paragraph={true}>
                         <strong>Google Analytics</strong>
                     </Typography>
-                    <Typography paragraph={true}>
+                    <Typography>
                         <ol style={{ margin: "10px 0px", padding: "15px" }}>
                             <li>Wir haben das Webseitenanalyse-Tool „Google Analytics“ (Google Ireland Limited, Registernr.: 368047, Gordon House, Barrow Street, Dublin 4, Irland) auf unserer Website integriert.<br /><br /></li>
                             <li>Beim Besuch unserer Website setzt Google einen Cookie auf Ihren Computer, um die Benutzung unserer Website durch Sie analysieren zu können. Die gewonnenen Daten werden in die USA übertragen und dort gespeichert. Falls personenbezogen Daten in die USA übertragen werden sollten, bietet die Zertifizierung Googles gemäß Privacy-Shield-Abkommen (<Link href="https://www.privacyshield.gov/EU-US-Framework" rel="nofollow noopener noreferrer" target="_blank">https://www.privacyshield.gov/EU-US-Framework</Link>) die Garantie dafür, dass das europäische Datenschutzrecht eingehalten wird.<br /><br /></li>
@@ -159,7 +160,7 @@ export default function Datenschutz() {
                     <Typography paragraph={true}>
                         <strong>Google Maps</strong>
                     </Typography>
-                    <Typography paragraph={true}>
+                    <Typography>
                         <ol style={{ margin: "10px 0px", padding: "15px" }}>
                             <li>Wir haben auf unserer Website Karten von „Google Maps“ (Google Ireland Limited, Registernr.: 368047, Gordon House, Barrow Street, Dublin 4, Irland) integriert. Damit können wirden Standort von Adressen und eine Anfahrtsbeschreibung direkt auf unserer Website in interaktiven Karten anzeigen und Ihnen die Nutzung dieses Tools ermöglichen.<br /><br /></li>
                             <li>Bei dem Abruf unserer Website, wo Google Maps integriert ist, wird eine Verbindung zu den Servern von Google in den USA aufgebaut. Hierbei können Ihre IP und Standort an Google übertragen werden. Zudem erhält Google die Information, dass Sie die entsprechende Seite aufgerufen haben. Dies erfolgt auch ohne Nutzerkonto bei Google. Sollten Sie in Ihren Google-Account eingeloggt sein, kann Google die obigen Daten Ihrem Account zuordnen. Wenn Sie dies nicht wünschen, müssen Sie sich bei Ihrem Google-Account ausloggen. Google erstellt aus solchen Daten Nutzerprofile und nutzt diese Daten zum Zwecke der Werbung, Marktforschung oder Optimierung seiner Websites.<br /><br /></li>
@@ -171,7 +172,7 @@ export default function Datenschutz() {
                     <Typography paragraph={true}>
                         <strong>Präsenz in sozialen Medien</strong>
                     </Typography>
-                    <Typography paragraph={true}>
+                    <Typography>
                         <ol style={{ margin: "10px 0px", padding: "15px" }}>
                             <li>Wir unterhalten in sozialen Medien Profile bzw. Fanpages, um mit den dort angeschlossenen und registrierten Nutzern zu kommunizieren und um über unsere Produkte, Angebote und Dienstleistungen zu informieren. Die US-Anbieter sind nach dem sog. Privacy-Shield zertifiziert und damit verpflichtet europäischen Datenschutz einzuhalten. Bei der Nutzung und dem Aufruf unseres Profils im jeweiligen Netzwerk durch Sie gelten die jeweiligen Datenschutzhinweise und Nutzungsbedingungen des jeweiligen Netzwerks.<br /><br /></li>
                             <li>Wir verarbeiten Ihre Daten, die Sie uns über diese Netzwerke senden, um mit Ihnen zu kommunizieren und um Ihre dortigen Nachrichten zu beantworten.<br /><br /></li>
@@ -189,7 +190,7 @@ export default function Datenschutz() {
                     <Typography paragraph={true}>
                         <strong>Rechte der betroffenen Person</strong>
                     </Typography>
-                    <Typography paragraph={true}>
+                    <Typography>
                         <ol style={{ margin: "10px 0px", padding: "15px" }}>
                             <li><strong>Widerspruch oder Widerruf gegen die Verarbeitung Ihrer Daten<br /><br />
                                 Soweit die Verarbeitung auf Ihrer Einwilligung gemäß Art. 6 Abs. 1 S. 1 lit. a), Art. 7 DS-GVO beruht, haben Sie das Recht, die Einwilligung jederzeit zu widerrufen. Die Rechtmäßigkeit der aufgrund der Einwilligung bis zum Widerruf erfolgten Verarbeitung wird dadurch nicht berührt.<br /><br />
@@ -242,6 +243,6 @@ export default function Datenschutz() {
                     </Typography>
                 </Container>
             </PageContainer>
-        } />
+        </PageWrapper>
     )
 }

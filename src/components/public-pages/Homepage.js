@@ -14,7 +14,7 @@ const Homepage = () => {
     `
 
     return (
-        <PageWrapper className='page' backgroundColor='#70be74' child={
+        <PageWrapper className='page' backgroundColor='#70be74'>
             <HomeContainer className="home">
                 <Grid container direction="row" justifyContent='center' spacing={2}>
                     <Grid item xs={12} md={8} lg={7} className="col s12 m8 push-m2 l7">
@@ -44,7 +44,7 @@ const Homepage = () => {
                     </Grid>
                 </Grid>
             </HomeContainer>
-        } />
+        </PageWrapper>
     )
 }
 

@@ -146,6 +146,7 @@ function useDeepCompareEffectForMaps(
   callback,
   dependencies
 ) {
+  // eslint-disable-next-line
   useEffect(callback, dependencies.map(useDeepCompareMemoize));
 }
 

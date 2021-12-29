@@ -13,7 +13,7 @@ export default function Impressum() {
         }
     `
     return (
-        <PageWrapper child={
+        <PageWrapper>
             <PageContainer className='impressum white'>
                 <Container>
                     <Typography variant='h2' component='h1' gutterBottom={true}>Impressum</Typography>
@@ -67,6 +67,6 @@ export default function Impressum() {
                     </Typography>
                 </Container>
             </PageContainer>
-        } />
+        </PageWrapper>
     )
 }

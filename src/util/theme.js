@@ -6,8 +6,12 @@ import { createTheme, responsiveFontSizes } from '@mui/material/styles'
 let theme = createTheme({
     palette: {
         // mode: 'dark',
-        primary: red,
-        secondary: green
+        primary: {
+            main: green[600],
+            light: green[400],
+            dark: green[800]
+        },
+        secondary: red
     },
     typography: {
         fontFamily: 'Quicksand',

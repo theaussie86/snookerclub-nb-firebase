@@ -12,10 +12,13 @@ import { useTheme } from '@emotion/react';
 import PoolTableUrl from "../../images/billard-clipart-pool-table-3.png";
 import { shortName } from '../../util/config'
 import { Link } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 
 
 
 const ClubAppBar = () => {
+
+    const { currentUser } = useAuth()
 
     const anchor = 'left'
     const [state, setState] = React.useState({ [anchor]: false })
@@ -55,8 +58,8 @@ const ClubAppBar = () => {
             <PoolTable src={PoolTableUrl} />
             <Divider />
             <List>
-                <SignedInLinks location="sidebar" />
-                <SignedOutLinks location="sidebar" />
+                {currentUser ? <SignedInLinks location="sidebar" /> :
+                    <SignedOutLinks location="sidebar" />}
             </List>
         </Box>
     );
@@ -91,8 +94,8 @@ const ClubAppBar = () => {
                         </Typography>
                     </Logo>
 
-                    {!isTablet && <SignedInLinks location='menu' />}
-                    {!isTablet && <SignedOutLinks location='menu' />}
+                    {!isTablet && currentUser && <SignedInLinks location='menu' />}
+                    {!isTablet && !currentUser && <SignedOutLinks location='menu' />}
                 </Toolbar>
             </Container>
         </AppBar>
