@@ -12,8 +12,6 @@ function Login() {
     const location = useLocation()
     const from = location.state ? location.state.from.pathname : '/'
 
-    console.log(location)
-
     const { login, currentUser } = useAuth()
     const [error, setError] = useState('')
 

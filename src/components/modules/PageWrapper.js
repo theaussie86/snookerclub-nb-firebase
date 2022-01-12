@@ -19,9 +19,11 @@ function PageWrapper(props) {
         justify-content: center;
     `
 
+    const bgColor = typeof props.backgroundColor === 'boolean' ? theme.palette.primary.light : props.backgroundColor;
+
     return (
         <Container maxWidth={false} disableGutters={true} style={{
-            backgroundColor: props.backgroundColor ? props.backgroundColor : 'none'
+            backgroundColor: props.backgroundColor ? bgColor : 'none'
         }}>
             <Wrapper className={props.className}>
                 {props.children}

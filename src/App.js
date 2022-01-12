@@ -9,9 +9,10 @@ import Impressum from './components/public-pages/Impressum';
 import NotFound from './components/public-pages/NotFound';
 import Login from './components/auth/Login';
 import RequireAuth from './components/auth/RequireAuth';
-import Dashboard from './components/dashboard/Dashboard';
+import Dashboard from './components/private-pages/Dashboard';
 import { AuthProvider } from './contexts/AuthContext';
 import ForgotPassword from './components/auth/ForgotPassword';
+import Profil from './components/private-pages/Profil';
 
 function App() {
   return (
@@ -29,6 +30,11 @@ function App() {
             <Route path='dashboard' element={
               <RequireAuth>
                 <Dashboard />
+              </RequireAuth>
+            } />
+            <Route path='profil' element={
+              <RequireAuth>
+                <Profil />
               </RequireAuth>
             } />
           </Routes>

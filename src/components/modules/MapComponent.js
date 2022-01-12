@@ -71,13 +71,13 @@ const MapComponent = () => {
   })
 
   const onIdle = (m) => {
-    console.log("onIdle");
+    // console.log("onIdle");
     setZoom(m.getZoom());
     setCenter(m.getCenter().toJSON());
   };
 
   return (
-    <Wrapper apiKey='AIzaSyBWpP8eCEUZzWRdzFV7RfhTXRdpM2ekiDc' render={render}>
+    <Wrapper apiKey={process.env.REACT_APP_MAPS_API_KEY} render={render}>
       <Map
         center={center}
         zoom={zoom}
@@ -100,11 +100,11 @@ const Marker = (options) => {
     }
 
     // remove marker from map on unmount
-    return () => {
+    return /*() => {
       if (marker) {
         marker.setMap(null);
       }
-    };
+    };*/
   }, [marker]);
 
   useEffect(() => {
