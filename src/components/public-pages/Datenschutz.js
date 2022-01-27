@@ -1,6 +1,6 @@
 import { Container, Link, Typography } from '@mui/material'
 import React from 'react'
-import PageWrapper from '../modules/PageWrapper'
+import PageWrapper from '../layout/PageWrapper'
 import { useTheme } from "@emotion/react";
 import styled from "styled-components";
 

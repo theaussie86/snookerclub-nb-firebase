@@ -3,7 +3,8 @@ import { NavLink } from 'react-router-dom'
 import React from 'react'
 import styled from 'styled-components'
 import { useTheme } from "@emotion/react";
-import { author } from '../../util/config'
+import config from '../../util/config'
+const { author } = config
 
 
 function Footer() {

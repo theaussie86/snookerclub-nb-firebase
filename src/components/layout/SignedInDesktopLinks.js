@@ -1,12 +1,15 @@
-import { Avatar, Box, Button, IconButton, Link, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
+import { Box, Button, IconButton, Link, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
 import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { menuPages, userSettings } from "../../util/config";
+import config from "../../util/config";
+import UserAvatar from '../modules/UserAvatar';
+
+const { menuPages, userSettings } = config
 
 function SignedInDesktopLinks() {
     const [anchorElUser, setAnchorElUser] = useState(null)
-    const { isAdmin, logout } = useAuth()
+    const { isAdmin, logout, currentUser } = useAuth()
 
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
@@ -22,9 +25,9 @@ function SignedInDesktopLinks() {
                     <Button key={page.title} component={NavLink} to={page.to} color="inherit">{page.title}</Button>
                 ))
             }
-            <Tooltip title="Einstellungen öffnen">
+            <Tooltip title={(currentUser.displayName ? currentUser.displayName + ' ' : '') + "Einstellungen öffnen"}>
                 <IconButton onClick={handleOpenUserMenu} style={{ padding: 0, marginLeft: '1rem' }}>
-                    <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                    <UserAvatar alt={currentUser.displayName} src={currentUser.photoURL} />
                 </IconButton>
             </Tooltip>
             <Menu

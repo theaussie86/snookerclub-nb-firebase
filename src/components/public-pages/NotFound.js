@@ -1,6 +1,6 @@
 import { Container } from '@mui/material'
 import React from 'react'
-import PageWrapper from '../modules/PageWrapper'
+import PageWrapper from '../layout/PageWrapper'
 
 export default function NotFound() {
     return (

@@ -2,8 +2,9 @@ import { Link, ListItem, ListItemText } from '@mui/material';
 import React from 'react'
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext'
-import { menuPages, userSettings } from "../../util/config";
+import config from "../../util/config";
 
+const { menuPages, userSettings } = config
 
 function SignedInMobileLinks() {
     const { isAdmin, logout } = useAuth()

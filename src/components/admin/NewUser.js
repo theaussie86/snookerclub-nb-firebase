@@ -1,64 +1,61 @@
-import { useTheme } from '@emotion/react'
-import React, { useEffect, useState } from 'react'
-import { useNavigate, NavLink } from 'react-router-dom'
-import { useAuth } from '../../contexts/AuthContext'
-import PageWrapper from '../layout/PageWrapper'
 import { Alert, Button, CardActions, CardHeader, TextField, Link } from '@mui/material'
+import React, { useState } from 'react'
+import PageWrapper from '../layout/PageWrapper'
+import { useTheme } from "@emotion/react";
+import { useAuth } from '../../contexts/AuthContext';
+import { NavLink } from "react-router-dom";
 import FormCard from '../modules/FormCard';
 import FormCardContent from '../modules/FormCardContent';
 
-
-function ForgotPassword() {
+function NewUser() {
     const theme = useTheme()
-    const navigate = useNavigate()
 
-    const { currentUser, resetPassword } = useAuth()
+    const { createUser } = useAuth()
     const [error, setError] = useState('')
-    const [message, setMessage] = useState('')
-
-    useEffect(() => {
-        if (currentUser) {
-            navigate(-1)
-        }
-    }, [currentUser, navigate])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        const { email } = e.target.elements
+        const { username, email } = e.target.elements
 
         try {
-            setError('')
-            setMessage('')
-            await resetPassword(email.value)
-            setMessage('Du hast eine E-Mail mit weiteren Anweisungen bekommen')
+
+            const link = await createUser({
+                displayname: username.value,
+                email: email.value,
+                origin: window.location.origin
+            })
+            console.log('Weiter zum Detailbildschirm des neuen Mitlgieds...', link)
 
         } catch (error) {
-
-            if (error.toString().indexOf('auth/user-not-found') > -1) {
-                setError('Es gibt keinen Benutzer mit dieser E-Mail-Adresse')
-            }
-
+            console.log(error)
+            setError(error.toString())
         }
     }
 
     return (
         <PageWrapper className='page' backgroundColor={theme.palette.primary.light}>
             <FormCard component='form' onSubmit={handleSubmit}>
-                <CardHeader title='Passwort zurücksetzen' />
+                <CardHeader title='Neues Mitglied anlegen' />
                 <FormCardContent>
                     {error && <Alert severity='error'>{error}</Alert>}
-                    {message && <Alert severity='info'>{message}</Alert>}
                     <TextField
                         id='email'
                         label='E-Mail-Adresse'
                         variant='standard'
+                        type='email'
                         required
                         margin='normal'
                         color='primary'
                         name='email'
-                        type='email'
                     />
-
+                    <TextField
+                        id='username'
+                        label='Benutzername'
+                        variant='standard'
+                        margin='normal'
+                        color='primary'
+                        name='username'
+                    />
                 </FormCardContent>
                 <CardActions style={{ justifyContent: 'space-between' }}>
                     <Button
@@ -66,13 +63,13 @@ function ForgotPassword() {
                         variant='contained'
                         type='submit'
                     >
-                        zurücksetzen
+                        Erstellen
                     </Button>
-                    <Link component={NavLink} to='/login'>Zum Login</Link>
+                    <Link component={NavLink} to='/users'>Alle Benutzer</Link>
                 </CardActions>
             </FormCard>
         </PageWrapper>
     )
 }
 
-export default ForgotPassword
+export default NewUser

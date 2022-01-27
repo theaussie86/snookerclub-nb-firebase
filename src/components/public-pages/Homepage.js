@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, Container, Grid, Typography } from '@mui/material'
 import React from 'react'
 import { styled } from '@mui/material/styles'
-import PageWrapper from '../modules/PageWrapper'
+import PageWrapper from '../layout/PageWrapper'
 import MapComponent from '../modules/MapComponent'
 
 

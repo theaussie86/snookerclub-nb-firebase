@@ -2,6 +2,8 @@ import React from 'react'
 import styled from "styled-components";
 import { useTheme } from "@emotion/react";
 import { Container, useMediaQuery } from '@mui/material';
+import Navbar from '../layout/Navbar'
+import Footer from './Footer';
 
 function PageWrapper(props) {
     const theme = useTheme();
@@ -22,13 +24,17 @@ function PageWrapper(props) {
     const bgColor = typeof props.backgroundColor === 'boolean' ? theme.palette.primary.light : props.backgroundColor;
 
     return (
-        <Container maxWidth={false} disableGutters={true} style={{
-            backgroundColor: props.backgroundColor ? bgColor : 'none'
-        }}>
-            <Wrapper className={props.className}>
-                {props.children}
-            </Wrapper>
-        </Container>
+        <>
+            <Navbar />
+            <Container maxWidth={false} disableGutters={true} style={{
+                backgroundColor: props.backgroundColor ? bgColor : 'none'
+            }}>
+                <Wrapper className={props.className} style={{ ...props.style }}>
+                    {props.children}
+                </Wrapper>
+            </Container>
+            <Footer />
+        </>
     )
 }
 

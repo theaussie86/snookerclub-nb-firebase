@@ -1,2 +1,6 @@
 node_modules/
 snookerclub-nb-9df8305957cb.json
+
+.eslintrc*
+package-lock.json
+ui-debug.log

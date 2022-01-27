@@ -1,78 +1,70 @@
-import { useTheme } from '@emotion/react'
+import { Alert, Button, CardActions, CardHeader, TextField, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { useNavigate, NavLink } from 'react-router-dom'
-import { useAuth } from '../../contexts/AuthContext'
 import PageWrapper from '../layout/PageWrapper'
-import { Alert, Button, CardActions, CardHeader, TextField, Link } from '@mui/material'
+import { useTheme } from "@emotion/react";
+import { useAuth } from '../../contexts/AuthContext';
+import { useNavigate } from "react-router-dom";
 import FormCard from '../modules/FormCard';
 import FormCardContent from '../modules/FormCardContent';
 
-
-function ForgotPassword() {
+function ActivateUser() {
     const theme = useTheme()
     const navigate = useNavigate()
 
-    const { currentUser, resetPassword } = useAuth()
+    const { checkSignInLink, signInWithLink } = useAuth()
     const [error, setError] = useState('')
-    const [message, setMessage] = useState('')
+    const [disabled, setDisabled] = useState(false)
 
     useEffect(() => {
-        if (currentUser) {
-            navigate(-1)
+        if (!checkSignInLink(window.location.href)) {
+            setError('Der Link ist fehlerhaft. Wende dich an den Admin.')
+            setDisabled(true)
         }
-    }, [currentUser, navigate])
+    }, [checkSignInLink])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         const { email } = e.target.elements
-
         try {
-            setError('')
-            setMessage('')
-            await resetPassword(email.value)
-            setMessage('Du hast eine E-Mail mit weiteren Anweisungen bekommen')
-
+            await signInWithLink(email.value, window.location.href)
+            navigate('/set-password')
         } catch (error) {
-
-            if (error.toString().indexOf('auth/user-not-found') > -1) {
-                setError('Es gibt keinen Benutzer mit dieser E-Mail-Adresse')
-            }
-
+            setError(error.toString())
         }
     }
 
     return (
         <PageWrapper className='page' backgroundColor={theme.palette.primary.light}>
-            <FormCard component='form' onSubmit={handleSubmit}>
-                <CardHeader title='Passwort zurücksetzen' />
+            <FormCard onSubmit={handleSubmit}>
+                <CardHeader title='Konto aktivieren' />
+                <Typography paragraph style={{ padding: '1rem' }}>Gib hier nochmal deine E-Mail-Adresse ein,<br /> um dein Konto zu aktivieren.</Typography>
                 <FormCardContent>
                     {error && <Alert severity='error'>{error}</Alert>}
-                    {message && <Alert severity='info'>{message}</Alert>}
                     <TextField
                         id='email'
                         label='E-Mail-Adresse'
                         variant='standard'
+                        type='email'
                         required
                         margin='normal'
                         color='primary'
                         name='email'
-                        type='email'
                     />
-
                 </FormCardContent>
                 <CardActions style={{ justifyContent: 'space-between' }}>
                     <Button
                         color='primary'
                         variant='contained'
                         type='submit'
+                        disabled={disabled}
+                        style={{ flexGrow: 1 }}
                     >
-                        zurücksetzen
+                        Aktivieren
                     </Button>
-                    <Link component={NavLink} to='/login'>Zum Login</Link>
                 </CardActions>
             </FormCard>
         </PageWrapper>
     )
 }
 
-export default ForgotPassword
+export default ActivateUser

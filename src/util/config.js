@@ -1,7 +1,15 @@
-module.exports = {
+import axios from 'axios'
+
+const REGION = 'europe-west1'
+const instance = axios.create({
+    baseURL: process.env.NODE_ENV === 'development' ? `http://localhost:5001/snookerclub-nb/${REGION}` : `https://${REGION}-snookerclub-nb.cloudfunctions.net/`
+})
+
+const config = {
     clubName: "1. Snookerclub Neubrandenburg e.V.",
     shortName: "Snookerclub NB",
     author: 'Christoph Weissteiner',
+    REGION: REGION,
     menuPages: [
         { title: 'Dashboard', to: '/dashboard' },
         { title: 'Mitglied anlegen', to: '/new-user', admin: true },
@@ -10,5 +18,8 @@ module.exports = {
     userSettings: [
         { title: 'Mein Profil', to: '/profile' },
         { title: 'Logout', onclick: 'logout' },
-    ]
+    ],
+    axios: instance
 }
+
+export default config

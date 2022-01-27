@@ -5,15 +5,17 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import SignedInLinks from './SignedInLinks';
-import { Box, List, Container, useMediaQuery, SwipeableDrawer, Divider } from '@mui/material';
+import { Box, List, Container, useMediaQuery, SwipeableDrawer, Divider, CardHeader, CardMedia, Card } from '@mui/material';
 import SignedOutLinks from './SignedOutLinks';
 import styled from 'styled-components';
 import { useTheme } from '@emotion/react';
 import PoolTableUrl from "../../images/billard-clipart-pool-table-3.png";
-import { shortName } from '../../util/config'
+import config from '../../util/config'
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import UserAvatar from '../modules/UserAvatar';
 
+const { shortName } = config
 
 
 const ClubAppBar = () => {
@@ -25,10 +27,6 @@ const ClubAppBar = () => {
     const theme = useTheme()
     const isTablet = useMediaQuery(theme.breakpoints.down('md'))
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-
-    const PoolTable = styled.img`
-        width: 100%;
-    `
 
     const Logo = styled(Link)`
         flex-grow: 1;
@@ -55,7 +53,23 @@ const ClubAppBar = () => {
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}
         >
-            <PoolTable src={PoolTableUrl} />
+            <Card
+                style={{ background: 'none' }}
+            >
+                <CardHeader
+                    avatar={
+                        <UserAvatar alt={currentUser.displayName} src={currentUser.photoURL} />
+                    }
+                    title={currentUser.displayName}
+                />
+                <CardMedia
+                    component="img"
+                    height="194"
+                    image={PoolTableUrl}
+                    alt="Pool Table"
+                />
+            </Card>
+
             <Divider />
             <List>
                 {currentUser ? <SignedInLinks location="sidebar" /> :
