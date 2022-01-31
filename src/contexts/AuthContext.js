@@ -93,7 +93,7 @@ export function AuthProvider({ children }) {
         return signInWithEmailLink(auth, email, link)
     }
 
-    // console.log(currentUser)
+    console.log(currentUser)
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {

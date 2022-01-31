@@ -12,6 +12,7 @@ const config = {
     REGION: REGION,
     menuPages: [
         { title: 'Dashboard', to: '/dashboard' },
+        { title: 'Breaks', to: '/breaks' },
         { title: 'Mitglied anlegen', to: '/new-user', admin: true },
         { title: 'Alle Mitglieder', to: '/users', admin: true },
     ],

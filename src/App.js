@@ -20,6 +20,7 @@ import { AdminProvider } from './contexts/AdminContext';
 import DataProvider from './contexts/DataContext';
 import NewBreak from './components/private-pages/NewBreak';
 import LocaleDateProvider from './contexts/LocaleDateProvider';
+import Breaks from './components/private-pages/Breaks';
 
 function App() {
   return (
@@ -45,6 +46,11 @@ function App() {
                   <Route path='new-break' element={
                     <RequireAuth>
                       <NewBreak />
+                    </RequireAuth>
+                  } />
+                  <Route path='breaks' element={
+                    <RequireAuth>
+                      <Breaks />
                     </RequireAuth>
                   } />
                   <Route path='profile' element={

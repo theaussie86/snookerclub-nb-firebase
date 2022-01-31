@@ -21,7 +21,6 @@ let theme = createTheme({
         fontWeightBold: 700,
         fontSize: 14,
     },
-    deDE,
     components: {
         MuiLink: {
             styleOverrides: {
@@ -43,7 +42,7 @@ let theme = createTheme({
             }
         }
     }
-})
+}, deDE)
 theme = responsiveFontSizes(theme)
 
 export default theme;

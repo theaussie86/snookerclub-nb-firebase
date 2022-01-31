@@ -85,6 +85,8 @@ const NewBreak = () => {
                     />
                     <FormControlLabel
                         label='Ich habe das Break nicht selbst gespielt'
+                        disableTypography={true}
+                        style={{ fontSize: '.875rem' }}
                         control={<Checkbox id='notSelf' name='notSelf' checked={playedNotSelf} onChange={handleCheckboxChange} color='primary' />}
                     />
                     <TextField
@@ -98,6 +100,7 @@ const NewBreak = () => {
                         color='primary'
                         name='numBreak'
                         style={{ marginTop: 0 }}
+                        autoFocus
                     />
                 </Container>
                 <CardActions style={{ justifyContent: 'space-between' }}>

@@ -3,10 +3,10 @@ import { Avatar } from '@mui/material'
 import React from 'react'
 
 
-function UserAvatar(props) {
+function UserAvatar({ children, ...rest }) {
     const theme = useTheme()
     return (
-        <Avatar {...props} style={{ backgroundColor: theme.palette.primary.main }} />
+        <Avatar {...rest} style={{ backgroundColor: theme.palette.primary.main }}>{children}</Avatar>
     )
 }
 

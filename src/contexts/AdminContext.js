@@ -19,8 +19,8 @@ export const useAdmin = () => useContext(AdminContext)
 export function AdminProvider({ children }) {
     const [loading, setLoading] = useState(false)
     const [users, setUsers] = useState(() => [])
-    const { currentUser, getUserDataById } = useAuth()
-    const headers = { Authorization: 'Bearer ' + currentUser.accessToken }
+    const { isAdmin, currentUser, getUserDataById } = useAuth()
+    const headers = {}
 
     console.log(users)
 
@@ -51,8 +51,11 @@ export function AdminProvider({ children }) {
     }
 
     useEffect(() => {
-        return getAllUsers()
-    }, []);
+        if (currentUser && isAdmin) {
+            headers.Authorization = 'Bearer ' + currentUser.accessToken
+            return getAllUsers()
+        }
+    }, [currentUser, isAdmin]);
 
     const value = {
         users,
