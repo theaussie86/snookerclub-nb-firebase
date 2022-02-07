@@ -8,9 +8,10 @@ import { useForm } from 'react-hook-form'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useAdmin } from '../../contexts/AdminContext'
 import Loading from '../modules/Loading'
+import Memberships from '../modules/Memberships'
 
 
-function Profil() {
+function AnyProfile() {
 
     const { currentUser,
         updateUserEmail,
@@ -20,8 +21,8 @@ function Profil() {
         updateUserPhoneNumber,
     } = useAuth()
 
-    const { users, setUsers, setLoading } = useAdmin()
-
+    const { users } = useAdmin()
+    // eslint-disable-next-line
     const [searchParams, setSearchParams] = useSearchParams()
     const { userId } = useParams()
     const navigate = useNavigate()
@@ -32,11 +33,6 @@ function Profil() {
     const [isVisible, setIsVisible] = useState(false)
     const [pwError, setPwError] = useState('')
     const [pw2Error, setPw2Error] = useState('')
-    const [thisuser, setThisuser] = useState(() => {
-        return userId && userId !== currentUser.uid ? users.reduce((res, user) => {
-            return user.uid === userId ? user : null
-        }, null) : currentUser
-    });
 
     useEffect(() => {
         const m = searchParams.get('m')
@@ -44,21 +40,19 @@ function Profil() {
     }, [searchParams])
 
     const { register, handleSubmit } = useForm({
-        defaultValues: thisuser ? {
-            username: thisuser.displayName,
-            email: thisuser.email,
-            phone: thisuser.phoneNumber,
-            firstname: thisuser.additionalData.firstname,
-            lastname: thisuser.additionalData.lastname,
-            street: thisuser.additionalData.street,
-            zip: thisuser.additionalData.zip,
-            city: thisuser.additionalData.city
+        defaultValues: users[userId] ? {
+            username: users[userId].displayName,
+            email: users[userId].email,
+            phone: users[userId].phoneNumber,
+            firstname: users[userId].additionalData.firstname,
+            lastname: users[userId].additionalData.lastname,
+            street: users[userId].additionalData.street,
+            zip: users[userId].additionalData.zip,
+            city: users[userId].additionalData.city
         } : {}
     })
 
     const goBack = () => navigate(-1)
-
-
 
     const handleMouseDown = (e) => {
         e.preventDefault()
@@ -126,10 +120,8 @@ function Profil() {
         if (error.password) setPwError(error.password.message)
     })
 
-    console.log(thisuser, users)
-
-    return thisuser ? (
-        <PageWrapper backgroundColor={true}>
+    return users[userId] ? (
+        <PageWrapper backgroundColor={true} style={{ flexDirection: 'column', padding: '2rem 0' }}>
             <FormCard onSubmit={handleFormSubmit}>
                 <CardHeader title='Meine Benutzerdaten' />
                 <CardContent>
@@ -266,7 +258,7 @@ function Profil() {
                             margin='normal'
                             color='primary'
                             error={!!pwError}
-                            helperText={pwError ? pwError : ''}
+                            helperText={pwError ? pwError : 'Nur ausfüllen, wenn du dein Passwort ändern möchtest'}
                             type={isVisible ? 'text' : 'password'}
                             InputProps={{
                                 endAdornment: <InputAdornment position="end">
@@ -288,7 +280,7 @@ function Profil() {
                             margin='normal'
                             color='primary'
                             error={!!pw2Error}
-                            helperText={pw2Error ? pw2Error : ''}
+                            helperText={pw2Error ? pw2Error : 'Nur ausfüllen, wenn du dein Passwort ändern möchtest'}
                             type={isVisible ? 'text' : 'password'}
                             InputProps={{
                                 endAdornment: <InputAdornment position="end">
@@ -318,8 +310,9 @@ function Profil() {
                     </CardActions>
                 </Container>
             </FormCard>
+            <Memberships userId={userId} />
         </PageWrapper>
     ) : (<Loading />)
 }
 
-export default Profil
+export default AnyProfile

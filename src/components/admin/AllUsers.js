@@ -1,25 +1,11 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import PageWrapper from '../layout/PageWrapper'
 import { useAdmin } from '../../contexts/AdminContext'
 import { Container, Avatar, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Typography, Paper } from '@mui/material'
 import { NavLink } from "react-router-dom";
 
 function AllUsers() {
-    const { users, setUsers, getAllUsers, setLoading } = useAdmin()
-    console.log(users)
-
-    // useEffect(() => {
-    //     if (users.length === 0) {
-    //         setLoading(true)
-    //         return getAllUsers()/*.then(usersResponse => {
-    //             setLoading(false)
-    //             setUsers(usersResponse.data)
-    //         });*/
-    //     } else {
-    //         return users
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [users]);
+    const { users } = useAdmin()
 
     return (
         <PageWrapper backgroundColor={true} style={{ flexDirection: 'column' }}>
@@ -36,19 +22,19 @@ function AllUsers() {
                             backgroundColor: 'var(--lt-color-background-light)',
                             borderRadius: 16,
                         }}>
-                            {users.filter(u => u.disabled === false).map((user) => {
+                            {Object.keys(users).filter(uid => users[uid].disabled === false).map((uid) => {
                                 return (
-                                    <ListItem key={user.uid} component={NavLink} to={"/profile/" + user.uid} disablePadding>
+                                    <ListItem key={uid} component={NavLink} to={"/profile/" + users[uid].uid} disablePadding>
                                         <ListItemButton>
                                             <ListItemAvatar>
                                                 <Avatar
-                                                    alt={user.displayName}
-                                                    src={user.photoUrl}
+                                                    alt={users[uid].displayName}
+                                                    src={users[uid].photoUrl}
                                                 />
                                             </ListItemAvatar>
                                             <ListItemText
-                                                primary={user.displayName}
-                                                secondary={user.email}
+                                                primary={users[uid].displayName}
+                                                secondary={users[uid].email}
                                             />
                                         </ListItemButton>
                                     </ListItem>
@@ -68,19 +54,19 @@ function AllUsers() {
                             backgroundColor: 'var(--lt-color-background-light)',
                             borderRadius: 16,
                         }}>
-                            {users.filter(u => u.disabled === true).map((user) => {
+                            {Object.keys(users).filter(uid => users[uid].disabled === true).map((uid) => {
                                 return (
-                                    <ListItem key={user.uid} disablePadding>
+                                    <ListItem key={uid} disablePadding>
                                         <ListItemButton>
                                             <ListItemAvatar>
                                                 <Avatar
-                                                    alt={user.displayName}
-                                                    src={user.photoUrl}
+                                                    alt={users[uid].displayName}
+                                                    src={users[uid].photoUrl}
                                                 />
                                             </ListItemAvatar>
                                             <ListItemText
-                                                primary={user.displayName}
-                                                secondary={user.email}
+                                                primary={users[uid].displayName}
+                                                secondary={users[uid].email}
                                             />
                                         </ListItemButton>
                                     </ListItem>
@@ -98,19 +84,19 @@ function AllUsers() {
                             backgroundColor: 'var(--lt-color-background-light)',
                             borderRadius: 16,
                         }}>
-                            {users.filter(u => u.customClaims && u.customClaims.admin === true).map((user) => {
+                            {Object.keys(users).filter(uid => users[uid].customClaims && users[uid].customClaims.admin === true).map((uid) => {
                                 return (
-                                    <ListItem key={user.uid} disablePadding>
+                                    <ListItem key={uid} disablePadding>
                                         <ListItemButton>
                                             <ListItemAvatar>
                                                 <Avatar
-                                                    alt={user.displayName}
-                                                    src={user.photoUrl}
+                                                    alt={users[uid].displayName}
+                                                    src={users[uid].photoUrl}
                                                 />
                                             </ListItemAvatar>
                                             <ListItemText
-                                                primary={user.displayName}
-                                                secondary={user.email}
+                                                primary={users[uid].displayName}
+                                                secondary={users[uid].email}
                                             />
                                         </ListItemButton>
                                     </ListItem>

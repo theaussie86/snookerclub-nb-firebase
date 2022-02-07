@@ -1,7 +1,6 @@
-import React, { useState, useEffect, forwardRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Wrapper } from '@googlemaps/react-wrapper';
 import { useRef } from 'react';
-import { createCustomEqual } from 'fast-equals';
 import LoaderUrl from '../../images/loader.gif';
 
 const Map = ({
@@ -44,8 +43,8 @@ const render = (status) => {
 
 const MapComponent = () => {
 
-  const [zoom, setZoom] = useState(16)
-  const [center, setCenter] = useState({
+  const [zoom, setZoom] = useState(16) // eslint-disable-line
+  const [center, setCenter] = useState({ // eslint-disable-line
     lat: 53.538,
     lng: 13.258
   })

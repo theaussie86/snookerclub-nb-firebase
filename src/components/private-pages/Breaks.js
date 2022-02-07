@@ -1,4 +1,4 @@
-import { Typography, Card, CardContent, List, ListItem, IconButton, ListItemAvatar, Avatar, ListItemText, CardHeader, Switch, CardActions, Button, Tooltip } from '@mui/material';
+import { Card, CardContent, List, ListItem, IconButton, ListItemAvatar, ListItemText, CardHeader, Switch, CardActions, Button, Tooltip } from '@mui/material';
 import React, { useState } from 'react';
 import { useData } from '../../contexts/DataContext';
 import { formatDate } from '../../util/helpers';

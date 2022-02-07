@@ -16,7 +16,9 @@ import {
     getFirestore,
     doc,
     getDoc,
-    setDoc
+    setDoc,
+    getDocs,
+    collection
 } from 'firebase/firestore'
 import app from "../firebase";
 import axios from 'axios';
@@ -30,6 +32,7 @@ export const useAuth = () => {
 
 export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState()
+    const [currentMemberships, setCurrentMemberships] = useState({});
     const [isAdmin, setIsAdmin] = useState(false)
     const [loading, setLoading] = useState(true)
     const auth = getAuth(app)
@@ -37,7 +40,27 @@ export function AuthProvider({ children }) {
 
     const getUserDataById = useCallback((uid) => {
         const docRef = doc(db, 'users', uid)
-        return getDoc(docRef)
+        return getDoc(docRef).then((snap => {
+            const additionalData = {
+                id: snap.id,
+                ...snap.data()
+            }
+            return additionalData
+        }))
+    }, [db])
+
+    const getUserMembershipsById = useCallback((uid) => {
+        const collectionRef = collection(db, 'users', uid, 'memberships')
+
+        return getDocs(collectionRef).then(snapshot => {
+            const memberships = {}
+            snapshot.forEach(d => {
+                memberships['uid'] = uid
+                memberships[d.id] = { ...d.data() }
+                return memberships
+            })
+            return memberships
+        })
     }, [db])
 
     const login = (email, password) => {
@@ -93,7 +116,7 @@ export function AuthProvider({ children }) {
         return signInWithEmailLink(auth, email, link)
     }
 
-    console.log(currentUser)
+    // console.log(currentUser, currentMemberships)
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -101,25 +124,28 @@ export function AuthProvider({ children }) {
             if (user) {
                 const tokenResult = await user.getIdTokenResult()
                 setIsAdmin(tokenResult.claims.admin === true)
-                const snapshot = await getUserDataById(user.uid)
-                if (snapshot.exists()) {
+                const data = await getUserDataById(user.uid)
+                if (data) {
                     // console.log(snapshot.data())
-                    const additionalUserData = snapshot.data()
+                    const additionalUserData = data
                     setCurrentUser(prevUser => {
                         // console.log(prevUser)
                         prevUser.additionalData = additionalUserData
                         return prevUser
                     })
                 }
+                const memberships = await getUserMembershipsById(user.uid)
+                setCurrentMemberships(memberships)
             }
             setLoading(false)
         })
         return unsubscribe
-    }, [auth, getUserDataById])
+    }, [auth, getUserDataById, getUserMembershipsById])
 
 
     const value = {
         currentUser,
+        currentMemberships,
         isAdmin,
         login,
         logout,
@@ -132,7 +158,8 @@ export function AuthProvider({ children }) {
         checkSignInLink,
         signInWithLink,
         getUserDataById,
-        updateUserPhoneNumber
+        updateUserPhoneNumber,
+        getUserMembershipsById
     }
 
     return (

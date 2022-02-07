@@ -10,3 +10,12 @@ export const formatDate = (date) => {
         return moment(ms).format('DD.MM.YYYY')
     }
 }
+
+export const formatMoney = (num, decimals = 0) => {
+    const options = {
+        style: 'currency',
+        currency: 'EUR',
+        maximumFractionDigits: decimals
+    }
+    return num.toLocaleString('de-DE', options)
+}

@@ -10,7 +10,8 @@ import RequireAuth from './components/auth/RequireAuth';
 import Dashboard from './components/private-pages/Dashboard';
 import { AuthProvider } from './contexts/AuthContext';
 import ForgotPassword from './components/auth/ForgotPassword';
-import Profil from './components/private-pages/Profil';
+import MyProfile from './components/private-pages/MyProfile';
+import AnyProfile from './components/admin/AnyProfile';
 import NewUser from './components/admin/NewUser';
 import RequireAdmin from './components/admin/RequireAdmin';
 import ActivateUser from './components/auth/ActivateUser';
@@ -21,6 +22,7 @@ import DataProvider from './contexts/DataContext';
 import NewBreak from './components/private-pages/NewBreak';
 import LocaleDateProvider from './contexts/LocaleDateProvider';
 import Breaks from './components/private-pages/Breaks';
+import Membership from './components/admin/Membership';
 
 function App() {
   return (
@@ -55,15 +57,16 @@ function App() {
                   } />
                   <Route path='profile' element={
                     <RequireAuth>
-                      <Profil />
+                      <MyProfile />
                     </RequireAuth>
-                  }>
-                    <Route path=":userId" element={
+                  } />
+                  <Route path="profile/:userId" element={
+                    <RequireAuth>
                       <RequireAdmin>
-                        <Profil />
+                        <AnyProfile />
                       </RequireAdmin>
-                    } />
-                  </Route>
+                    </RequireAuth>
+                  } />
                   <Route path='set-password' element={
                     <RequireAuth>
                       <SetPassword />
@@ -80,6 +83,20 @@ function App() {
                     <RequireAuth>
                       <RequireAdmin>
                         <AllUsers />
+                      </RequireAdmin>
+                    </RequireAuth>
+                  } />
+                  <Route path='membership/:userId' element={
+                    <RequireAuth>
+                      <RequireAdmin>
+                        <Membership />
+                      </RequireAdmin>
+                    </RequireAuth>
+                  } />
+                  <Route path='membership/:userId/:membershipId' element={
+                    <RequireAuth>
+                      <RequireAdmin>
+                        <Membership />
                       </RequireAdmin>
                     </RequireAuth>
                   } />

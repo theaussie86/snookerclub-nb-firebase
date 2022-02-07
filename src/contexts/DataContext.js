@@ -17,7 +17,7 @@ export const useData = () => useContext(DataContext)
 
 const DataProvider = ({ children }) => {
 
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false); // eslint-disable-line
     const [breaks, setBreaks] = useState([]);
     const { currentUser } = useAuth()
 

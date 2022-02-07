@@ -20,7 +20,11 @@ const config = {
         { title: 'Mein Profil', to: '/profile' },
         { title: 'Logout', onclick: 'logout' },
     ],
-    axios: instance
+    axios: instance,
+    membershipFees: {
+        'Vollmitglied': 50,
+        'Vollmitglied_alt': 60
+    }
 }
 
 export default config

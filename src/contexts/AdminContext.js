@@ -5,7 +5,9 @@ import {
     doc,
     getDoc,
     setDoc,
-    connectFirestoreEmulator
+    addDoc,
+    deleteDoc,
+    collection
 } from 'firebase/firestore'
 import { db } from "../firebase";
 
@@ -18,15 +20,44 @@ export const useAdmin = () => useContext(AdminContext)
 
 export function AdminProvider({ children }) {
     const [loading, setLoading] = useState(false)
-    const [users, setUsers] = useState(() => [])
-    const { isAdmin, currentUser, getUserDataById } = useAuth()
+    const [users, setUsers] = useState({})
+    const [memberships, setMemberships] = useState({});
+    const { isAdmin, currentUser, getUserDataById, getUserMembershipsById } = useAuth()
     const headers = {}
 
-    console.log(users)
+    const saveNewMembership = (uid, data) => {
+        return addDoc(collection(db, 'users', uid, 'memberships'), data).then(docRef => getDoc(docRef)).then(snapshot => {
+            console.log(snapshot.id, snapshot.data())
+            setMemberships(prev => {
+                prev[uid][snapshot.id] = snapshot.data()
+                return prev
+            })
+        })
+    }
+
+    const updateMembership = (uid, mid, data) => {
+        return setDoc(doc(db, 'users', uid, 'memberships', mid), data).then((snapshot) => {
+            setMemberships(prev => {
+                prev[uid][mid] = data
+                return prev
+            })
+        })
+    }
+
+    const deleteMembership = (uid, mid) => {
+        return deleteDoc(doc(db, 'users', uid, 'memberships', mid)).then(() => {
+            setMemberships(prev => {
+                delete prev[uid][mid]
+                return prev
+            })
+        })
+    }
 
     const getAllUsers = () => {
         setLoading(true)
         let fetchedUsers = []
+        const allUsers = {}
+        const allMemberships = {}
         return axios.post('/admin-getAllUsers', null, {
             headers: headers
         }).then(res => {
@@ -34,18 +65,25 @@ export function AdminProvider({ children }) {
             fetchedUsers = res.data
             for (let user of fetchedUsers) {
                 promises.push(getUserDataById(user.uid))
+                promises.push(getUserMembershipsById(user.uid))
             }
             return Promise.all(promises)
         }).then(results => {
-            for (let res of results) {
-                console.log(res.data(), res.id)
+            for (let data of results) {
+                if (!data.id && data.uid) {
+                    allMemberships[data.uid] = data
+                    delete allMemberships[data.uid].uid
+                    continue
+                }
                 for (let u of fetchedUsers) {
-                    if (u.uid === res.id) {
-                        u.additionalData = res.data()
+                    if (u.uid === data.id) {
+                        u.additionalData = data
+                        allUsers[u.uid] = u;
                     }
                 }
             }
-            setUsers(fetchedUsers)
+            setMemberships(allMemberships)
+            setUsers(allUsers)
             setLoading(false)
         })
     }
@@ -55,13 +93,18 @@ export function AdminProvider({ children }) {
             headers.Authorization = 'Bearer ' + currentUser.accessToken
             return getAllUsers()
         }
-    }, [currentUser, isAdmin]);
+    }, []); // eslint-disable-line
 
     const value = {
         users,
+        memberships,
         setUsers,
+        setMemberships,
         getAllUsers,
-        setLoading
+        setLoading,
+        saveNewMembership,
+        updateMembership,
+        deleteMembership
     }
 
     return (
