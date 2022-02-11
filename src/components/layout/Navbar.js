@@ -58,9 +58,9 @@ const ClubAppBar = () => {
             >
                 <CardHeader
                     avatar={
-                        <UserAvatar alt={currentUser.displayName} src={currentUser.photoURL} />
+                        <UserAvatar alt={currentUser && currentUser.displayName} src={currentUser && currentUser.photoURL} />
                     }
-                    title={currentUser.displayName}
+                    title={currentUser && currentUser.displayName}
                 />
                 <CardMedia
                     component="img"

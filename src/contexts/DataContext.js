@@ -6,7 +6,9 @@ import {
     collection,
     addDoc,
     getDocs,
-    deleteDoc
+    deleteDoc,
+    query,
+    where
 } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useAuth } from './AuthContext';
@@ -17,9 +19,10 @@ export const useData = () => useContext(DataContext)
 
 const DataProvider = ({ children }) => {
 
-    const [loading, setLoading] = useState(false); // eslint-disable-line
+    const [loading, setLoading] = useState(true); // eslint-disable-line
     const [breaks, setBreaks] = useState([]);
     const { currentUser } = useAuth()
+    const [myRents, setMyRents] = useState([])
 
     const saveNewBreak = (breakObject) => {
         return addDoc(collection(db, 'breaks'), breakObject).then(docRef => {
@@ -32,6 +35,10 @@ const DataProvider = ({ children }) => {
                 return prevBreaks
             })
         })
+    }
+
+    const saveNewRent = (rent) => {
+        return addDoc(collection(db, 'rents'), rent)
     }
 
     const deleteBreak = (id) => {
@@ -51,16 +58,40 @@ const DataProvider = ({ children }) => {
         }).catch(err => console.error('error fetching allbreaks', err))
     }
 
+    const getRentsByUserId = (uid) => {
+        const rentsRef = collection(db, 'rents')
+        const q = query(rentsRef, where('_member', '==', uid))
+        return getDocs(q).then((querySnapshot) => {
+            const myRents = []
+            querySnapshot.forEach((doc) => {
+                myRents.push({ id: doc.id, ...doc.data() })
+            })
+            setMyRents(myRents)
+        }).catch((error) => console.error('error fetching rents', error))
+    }
+
+    const deleteRent = (id) => {
+        return deleteDoc(doc(db, 'rents', id)).then(() => {
+            setMyRents(prevRents => prevRents.filter(r => r.id !== id))
+        })
+    }
+
     useEffect(() => {
-        if (currentUser)
-            return getAllBreaks()
-    }, [currentUser]);
+        let subscribed = true
+        if (currentUser && subscribed)
+            return getAllBreaks().then(() => setLoading(false))
+        return () => subscribed = false
+    }, []); // eslint-disable-line
 
 
     const value = {
         saveNewBreak,
+        saveNewRent,
         breaks,
-        deleteBreak
+        myRents,
+        deleteBreak,
+        getRentsByUserId,
+        deleteRent
     }
 
     return <DataContext.Provider value={value}>

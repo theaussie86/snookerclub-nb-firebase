@@ -7,7 +7,8 @@ import {
     setDoc,
     addDoc,
     deleteDoc,
-    collection
+    collection,
+    getDocs
 } from 'firebase/firestore'
 import { db } from "../firebase";
 
@@ -22,6 +23,7 @@ export function AdminProvider({ children }) {
     const [loading, setLoading] = useState(false)
     const [users, setUsers] = useState({})
     const [memberships, setMemberships] = useState({});
+    const [allRents, setAllRents] = useState([])
     const { isAdmin, currentUser, getUserDataById, getUserMembershipsById } = useAuth()
     const headers = {}
 
@@ -88,6 +90,16 @@ export function AdminProvider({ children }) {
         })
     }
 
+    const getAllRents = () => {
+        return getDocs(collection(db, 'rents')).then((querySnapshot) => {
+            const allRents = []
+            querySnapshot.forEach((doc) => {
+                allRents.push({ id: doc.id, ...doc.data() })
+            })
+            setAllRents(allRents)
+        }).catch((error) => console.error('Error fetching all rents', error))
+    }
+
     useEffect(() => {
         if (currentUser && isAdmin) {
             headers.Authorization = 'Bearer ' + currentUser.accessToken
@@ -98,13 +110,15 @@ export function AdminProvider({ children }) {
     const value = {
         users,
         memberships,
+        allRents,
         setUsers,
         setMemberships,
         getAllUsers,
         setLoading,
         saveNewMembership,
         updateMembership,
-        deleteMembership
+        deleteMembership,
+        getAllRents
     }
 
     return (

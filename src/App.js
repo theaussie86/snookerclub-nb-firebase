@@ -23,6 +23,8 @@ import NewBreak from './components/private-pages/NewBreak';
 import LocaleDateProvider from './contexts/LocaleDateProvider';
 import Breaks from './components/private-pages/Breaks';
 import Membership from './components/admin/Membership';
+import NewRent from './components/private-pages/NewRent';
+import Rents from './components/private-pages/Rents';
 
 function App() {
   return (
@@ -45,6 +47,11 @@ function App() {
                       <Dashboard />
                     </RequireAuth>
                   } />
+                  <Route path='new-rent' element={
+                    <RequireAuth>
+                      <NewRent />
+                    </RequireAuth>
+                  } />
                   <Route path='new-break' element={
                     <RequireAuth>
                       <NewBreak />
@@ -53,6 +60,11 @@ function App() {
                   <Route path='breaks' element={
                     <RequireAuth>
                       <Breaks />
+                    </RequireAuth>
+                  } />
+                  <Route path='rents' element={
+                    <RequireAuth>
+                      <Rents />
                     </RequireAuth>
                   } />
                   <Route path='profile' element={

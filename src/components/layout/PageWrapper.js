@@ -19,6 +19,7 @@ function PageWrapper(props) {
         display:flex;
         align-items: center;
         justify-content: center;
+        padding: ${isMobile ? '0 .5rem' : 'none'}
     `
 
     const bgColor = typeof props.backgroundColor === 'boolean' ? theme.palette.primary.light : props.backgroundColor;
