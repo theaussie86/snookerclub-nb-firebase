@@ -1,7 +1,6 @@
 import { Alert, Button, CardActions, CardHeader, TextField, Link } from '@mui/material'
 import React, { useState, useEffect } from 'react'
 import PageWrapper from '../layout/PageWrapper'
-import { useTheme } from "@emotion/react";
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate, useLocation, NavLink } from "react-router-dom";
 import FormCard from '../modules/FormCard';
@@ -9,7 +8,6 @@ import FormCardContent from '../modules/FormCardContent';
 import PasswordField from '../modules/PasswordField';
 
 function Login() {
-    const theme = useTheme()
     const navigate = useNavigate()
     const location = useLocation()
     const from = location.state ? location.state.from.pathname : '/'
@@ -18,9 +16,9 @@ function Login() {
     const [error, setError] = useState('')
 
     useEffect(() => {
-        if (currentUser) {
-            navigate(-1)
-        }
+        // if (currentUser) {
+        //     navigate(-1)
+        // }
     }, [currentUser, navigate])
 
     const handleSubmit = async (e) => {
@@ -44,7 +42,7 @@ function Login() {
     }
 
     return (
-        <PageWrapper className='page' backgroundColor={theme.palette.primary.light}>
+        <PageWrapper className='page' backgroundColor={true}>
             <FormCard onSubmit={handleSubmit}>
                 <CardHeader title='Gebe hier deine Anmeldedaten ein' />
                 <FormCardContent>
@@ -69,7 +67,7 @@ function Login() {
                         name='password'
                     />
                 </FormCardContent>
-                <CardActions style={{ justifyContent: 'space-between' }}>
+                <CardActions style={{ justifyContent: 'space-between', padding: '1rem' }}>
                     <Button
                         color='primary'
                         variant='contained'

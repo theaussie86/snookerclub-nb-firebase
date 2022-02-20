@@ -1,8 +1,9 @@
-import { Card, CardContent, List, ListItem, IconButton, ListItemAvatar, ListItemText, CardHeader, Switch, CardActions, Button, Tooltip } from '@mui/material';
-import React, { useState } from 'react';
+import { CardContent, List, ListItem, IconButton, ListItemAvatar, ListItemText, CardHeader, Switch, CardActions, Button, Tooltip } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import { useData } from '../../contexts/DataContext';
 import { formatDate } from '../../util/helpers';
 import PageWrapper from '../layout/PageWrapper';
+import ClubCard from '../modules/ClubCard';
 import DeleteIcon from '@mui/icons-material/Delete'
 import UserAvatar from '../modules/UserAvatar';
 import { useAuth } from '../../contexts/AuthContext';
@@ -13,10 +14,8 @@ import { NavLink } from "react-router-dom";
 const Breaks = () => {
     const [onlyMyBreaks, setOnlyMyBreaks] = useState(true);
     const [subheader, setSubheader] = useState('Meine Breaks');
-    const { breaks, deleteBreak } = useData()
+    const { breaks, getAllBreaks, deleteBreak } = useData()
     const { currentUser, isAdmin } = useAuth()
-
-    console.log(breaks)
 
     const handleSwitchChange = (e) => {
         console.log(e.target.checked)
@@ -30,12 +29,20 @@ const Breaks = () => {
         } catch (error) {
             console.error(error)
         }
-
     }
 
+
+
+    useEffect(() => {
+        const fetchAllBreaks = async () => {
+            await getAllBreaks();
+        }
+        if (!breaks.length)
+            return fetchAllBreaks()
+    }, [breaks, getAllBreaks])
+
     return <PageWrapper backgroundColor={true} style={{ flexDirection: 'column' }}>
-        {/*<Typography variant='h2' component='h1'>Breaks</Typography>*/}
-        <Card >
+        <ClubCard >
             <CardHeader
                 title='Breaks'
                 subheader={subheader}
@@ -68,7 +75,7 @@ const Breaks = () => {
             <CardActions style={{ justifyContent: 'flex-end' }}>
                 <Button LinkComponent={NavLink} to='/new-break' color="primary" >Neues Break anlegen</Button>
             </CardActions>
-        </Card>
+        </ClubCard>
     </PageWrapper>;
 };
 

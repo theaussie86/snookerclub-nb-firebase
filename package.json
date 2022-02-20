@@ -11,6 +11,7 @@
     "@mui/lab": "^5.0.0-alpha.66",
     "@mui/material": "^5.2.3",
     "@mui/styled-engine-sc": "^5.1.0",
+    "@react-pdf/renderer": "^2.1.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -29,12 +30,16 @@
     "styled-components": "^5.3.3",
     "web-vitals": "^1.0.1"
   },
+  "devDependencies": {
+    "pspdfkit": "^2022.1.2"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy:hosting": "firebase deploy --only hosting"
+    "deploy:hosting": "firebase deploy --only hosting",
+    "install:pspdfkit": "cp -R ./node_modules/pspdfkit/dist/pspdfkit-lib public/pspdfkit-lib"
   },
   "eslintConfig": {
     "extends": [

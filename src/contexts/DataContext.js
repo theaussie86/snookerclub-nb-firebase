@@ -1,6 +1,5 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { createContext, useState } from 'react';
-import Loading from '../components/modules/Loading';
 import {
     doc,
     collection,
@@ -19,9 +18,7 @@ export const useData = () => useContext(DataContext)
 
 const DataProvider = ({ children }) => {
 
-    const [loading, setLoading] = useState(true); // eslint-disable-line
     const [breaks, setBreaks] = useState([]);
-    const { currentUser } = useAuth()
     const [myRents, setMyRents] = useState([])
 
     const saveNewBreak = (breakObject) => {
@@ -76,14 +73,6 @@ const DataProvider = ({ children }) => {
         })
     }
 
-    useEffect(() => {
-        let subscribed = true
-        if (currentUser && subscribed)
-            return getAllBreaks().then(() => setLoading(false))
-        return () => subscribed = false
-    }, []); // eslint-disable-line
-
-
     const value = {
         saveNewBreak,
         saveNewRent,
@@ -91,11 +80,12 @@ const DataProvider = ({ children }) => {
         myRents,
         deleteBreak,
         getRentsByUserId,
-        deleteRent
+        deleteRent,
+        getAllBreaks
     }
 
     return <DataContext.Provider value={value}>
-        {!loading ? children : <Loading />}
+        {children}
     </DataContext.Provider>;
 };
 

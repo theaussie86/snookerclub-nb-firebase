@@ -44,7 +44,10 @@ function ForgotPassword() {
     return (
         <PageWrapper className='page' backgroundColor={theme.palette.primary.light}>
             <FormCard component='form' onSubmit={handleSubmit}>
-                <CardHeader title='Passwort zurücksetzen' />
+                <CardHeader
+                    title='Passwort zurücksetzen'
+                    subheader='Gib hier die E-Mail-Adresse deines Kontos ein.'
+                />
                 <FormCardContent>
                     {error && <Alert severity='error'>{error}</Alert>}
                     {message && <Alert severity='info'>{message}</Alert>}
@@ -60,7 +63,7 @@ function ForgotPassword() {
                     />
 
                 </FormCardContent>
-                <CardActions style={{ justifyContent: 'space-between' }}>
+                <CardActions style={{ justifyContent: 'space-between', padding: '1rem' }}>
                     <Button
                         color='primary'
                         variant='contained'
@@ -68,7 +71,7 @@ function ForgotPassword() {
                     >
                         zurücksetzen
                     </Button>
-                    <Link component={NavLink} to='/login'>Zum Login</Link>
+                    <Button component={NavLink} to='/login'>Zum Login</Button>
                 </CardActions>
             </FormCard>
         </PageWrapper>

@@ -25,6 +25,9 @@ import Breaks from './components/private-pages/Breaks';
 import Membership from './components/admin/Membership';
 import NewRent from './components/private-pages/NewRent';
 import Rents from './components/private-pages/Rents';
+import { Bills } from './components/private-pages/Bills';
+import { Bill } from './components/public-pages/Bill';
+import AccountManagement from './components/auth/AccountManagement';
 
 function App() {
   return (
@@ -41,6 +44,7 @@ function App() {
                   <Route path='datenschutz' element={<Datenschutz />} />
                   <Route path='impressum' element={<Impressum />} />
                   <Route path='activate' element={<ActivateUser />} />
+                  <Route path='manage' element={<AccountManagement />} />
                   <Route path='*' element={<NotFound />} />
                   <Route path='dashboard' element={
                     <RequireAuth>
@@ -67,6 +71,12 @@ function App() {
                       <Rents />
                     </RequireAuth>
                   } />
+                  <Route path='bills' element={
+                    <RequireAuth>
+                      <Bills />
+                    </RequireAuth>
+                  } />
+                  <Route path='bills/:id' element={<Bill />} />
                   <Route path='profile' element={
                     <RequireAuth>
                       <MyProfile />

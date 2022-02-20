@@ -29,22 +29,6 @@ function MyProfile() {
     const [isVisible, setIsVisible] = useState(false)
     const [pwError, setPwError] = useState('')
     const [pw2Error, setPw2Error] = useState('')
-    // const [thisuser, setThisuser] = useState(() => {
-    //     return userId ? users.reduce((res, user) => {
-    //         return user.uid === userId ? user : null
-    //     }, null) : currentUser
-    // });
-
-    // useEffect(() => {
-    //     if (userId && userId !== currentUser.uid) {
-    //         setThisuser(users.reduce((res, user) => {
-    //             return user.uid === userId ? user : null
-    //         }, null))
-    //     } else {
-    //         setThisuser(currentUser)
-    //     }
-    // }, [userId]);
-
 
     useEffect(() => {
         const m = searchParams.get('m')
@@ -135,8 +119,8 @@ function MyProfile() {
     console.log(currentUser)
 
     return currentUser ? (
-        <PageWrapper backgroundColor={true} style={{ flexDirection: 'column', padding: '2rem 0' }}>
-            <FormCard onSubmit={handleFormSubmit}>
+        <PageWrapper backgroundColor={true} style={{ flexDirection: 'column' }}>
+            <FormCard onSubmit={handleFormSubmit} style={{ margin: '2rem 0', alignSelf: 'stretch' }}>
                 <CardHeader title='Meine Benutzerdaten' />
                 <CardContent>
                     <Container>
@@ -145,13 +129,15 @@ function MyProfile() {
                         {info && <Alert severity='warning'>{info}</Alert>}
                     </Container>
                     <Container
-                        disableGutters={true}
+                        disableGutters={false}
                         style={{
-                            display: 'flex',
+                            display: 'grid',
+                            gridGap: '0 3rem',
+                            gridTemplateColumns: 'repeat(auto-fit, minmax(215px,1fr) )'
                         }}
                     >
                         <Container
-                            disableGutters={false}
+                            disableGutters={true}
                             style={{
                                 display: 'flex',
                                 flexDirection: 'column'
@@ -190,7 +176,7 @@ function MyProfile() {
                             />*/}
                         </Container>
                         <Container
-                            disableGutters={false}
+                            disableGutters={true}
                             style={{
                                 display: 'flex',
                                 flexDirection: 'column'
@@ -256,8 +242,8 @@ function MyProfile() {
                     <Divider flexItem={true} style={{ margin: '2rem 1.5rem' }} />
                     <Container style={{
                         display: 'grid',
-                        gridGap: '3rem',
-                        gridTemplateColumns: '1fr 1fr'
+                        gridGap: '0 3rem',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(215px,1fr) )'
                     }}>
                         <TextField
                             {...register("password", {
@@ -312,7 +298,7 @@ function MyProfile() {
                     </Container>
                 </CardContent>
                 <Container >
-                    <CardActions style={{ justifyContent: 'space-between' }}>
+                    <CardActions style={{ justifyContent: 'space-between', padding: '1rem' }}>
                         <Button
                             color='primary'
                             variant='contained'

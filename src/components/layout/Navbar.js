@@ -46,6 +46,8 @@ const ClubAppBar = () => {
         setState({ ...state, [anchor]: open });
     };
 
+    const avatarColor = { color: '#f5f5f5' }
+
     const list = (anchor) => (
         <Box
             sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
@@ -58,9 +60,12 @@ const ClubAppBar = () => {
             >
                 <CardHeader
                     avatar={
-                        <UserAvatar alt={currentUser && currentUser.displayName} src={currentUser && currentUser.photoURL} />
+                        <UserAvatar alt={currentUser && currentUser.displayName[0]} src={currentUser && currentUser.photoURL} />
                     }
                     title={currentUser && currentUser.displayName}
+                    subheader={currentUser && currentUser.email}
+                    titleTypographyProps={avatarColor}
+                    subheaderTypographyProps={avatarColor}
                 />
                 <CardMedia
                     component="img"

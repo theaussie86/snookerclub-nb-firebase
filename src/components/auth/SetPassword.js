@@ -112,12 +112,11 @@ const SetPassword = () => {
                         }}
                     />
                 </FormCardContent>
-                <CardActions style={{ justifyContent: 'space-between' }}>
+                <CardActions style={{ justifyContent: 'space-between', padding: '1rem' }}>
                     <Button
                         color='primary'
                         variant='contained'
                         type='submit'
-                        style={{ flexGrow: 1 }}
                     >
                         Passwort setzen
                     </Button>

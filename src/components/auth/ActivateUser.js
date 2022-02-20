@@ -34,7 +34,7 @@ function ActivateUser() {
     }
 
     return (
-        <PageWrapper className='page' backgroundColor={theme.palette.primary.light}>
+        <PageWrapper className='page' backgroundColor={true}>
             <FormCard onSubmit={handleSubmit}>
                 <CardHeader title='Konto aktivieren' />
                 <Typography paragraph style={{ padding: '1rem' }}>Gib hier nochmal deine E-Mail-Adresse ein,<br /> um dein Konto zu aktivieren.</Typography>
@@ -51,13 +51,12 @@ function ActivateUser() {
                         name='email'
                     />
                 </FormCardContent>
-                <CardActions style={{ justifyContent: 'space-between' }}>
+                <CardActions style={{ padding: '1rem' }}>
                     <Button
                         color='primary'
                         variant='contained'
                         type='submit'
                         disabled={disabled}
-                        style={{ flexGrow: 1 }}
                     >
                         Aktivieren
                     </Button>

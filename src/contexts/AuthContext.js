@@ -11,6 +11,8 @@ import {
     updatePhoneNumber,
     isSignInWithEmailLink,
     signInWithEmailLink,
+    verifyPasswordResetCode,
+    confirmPasswordReset
 } from 'firebase/auth'
 import {
     getFirestore,
@@ -72,7 +74,18 @@ export function AuthProvider({ children }) {
     }
 
     const resetPassword = (email) => {
-        return sendPasswordResetEmail(auth, email)
+        const actionCodeSettings = {
+            url: window.location.origin + '/dashboard',
+        }
+        return sendPasswordResetEmail(auth, email, actionCodeSettings)
+    }
+
+    const verifyPasswordReset = (code) => {
+        return verifyPasswordResetCode(auth, code)
+    }
+
+    const confirmPassword = (code, password) => {
+        return confirmPasswordReset(auth, code, password)
     }
 
     const updateUserEmail = (email) => {
@@ -135,6 +148,7 @@ export function AuthProvider({ children }) {
                     })
                 }
                 const memberships = await getUserMembershipsById(user.uid)
+                delete memberships.uid
                 setCurrentMemberships(memberships)
             }
             setLoading(false)
@@ -159,7 +173,9 @@ export function AuthProvider({ children }) {
         signInWithLink,
         getUserDataById,
         updateUserPhoneNumber,
-        getUserMembershipsById
+        getUserMembershipsById,
+        verifyPasswordReset,
+        confirmPassword
     }
 
     return (

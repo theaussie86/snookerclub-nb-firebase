@@ -5,6 +5,7 @@ function FormCard(props) {
 
     return (
         <Card sx={{
+            ...props.style,
             padding: { sm: '1rem' },
             minWidth: { xs: 1, sm: 400 }
         }}>

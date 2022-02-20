@@ -2,12 +2,12 @@ import moment from "moment";
 import 'moment/locale/de'
 moment.locale('de')
 
-export const formatDate = (date) => {
+export const formatDate = (date, pattern = 'DD.MM.YYYY') => {
     if (date instanceof Date) {
-        return moment(date).format('DD.MM.YYYY')
+        return moment(date).format(pattern)
     } else {
         const ms = Math.round((date.seconds * Math.pow(10, 9) + date.nanoseconds) * Math.pow(10, -6))
-        return moment(ms).format('DD.MM.YYYY')
+        return moment(ms).format(pattern)
     }
 }
 
