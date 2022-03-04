@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Wrapper } from '@googlemaps/react-wrapper';
 import { useRef } from 'react';
-import LoaderUrl from '../../images/loader.gif';
 
 const Map = ({
   onClick,
@@ -35,12 +34,6 @@ const Map = ({
   )
 }
 
-
-const render = (status) => {
-  return <img src={LoaderUrl} alt={status} />
-}
-
-
 const MapComponent = () => {
 
   const [zoom, setZoom] = useState(16) // eslint-disable-line
@@ -50,7 +43,7 @@ const MapComponent = () => {
   })
 
   return (
-    <Wrapper apiKey={process.env.REACT_APP_MAPS_API_KEY} render={render}>
+    <Wrapper apiKey={process.env.REACT_APP_MAPS_API_KEY}>
       <Map
         center={center}
         zoom={zoom}

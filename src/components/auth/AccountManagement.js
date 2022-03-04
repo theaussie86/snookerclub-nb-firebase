@@ -2,6 +2,7 @@ import React from 'react'
 import PageWrapper from '../layout/PageWrapper'
 import { useSearchParams } from "react-router-dom";
 import { ResetPassword } from './ResetPassword';
+import ActivateUser from './ActivateUser';
 
 function AccountManagement() {
     const [searchParams, setSearchParams] = useSearchParams()
@@ -14,6 +15,7 @@ function AccountManagement() {
     return (
         <PageWrapper className='page' backgroundColor={true}>
             {params.mode === 'resetPassword' && <ResetPassword params={params} />}
+            {params.mode === 'signIn' && <ActivateUser params={params} />}
         </PageWrapper>
     )
 }

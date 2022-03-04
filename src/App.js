@@ -76,7 +76,7 @@ function App() {
                       <Bills />
                     </RequireAuth>
                   } />
-                  <Route path='bills/:id' element={<Bill />} />
+                  <Route path='bills/:content/:iv/:tag' element={<Bill />} />
                   <Route path='profile' element={
                     <RequireAuth>
                       <MyProfile />

@@ -1,4 +1,4 @@
-import { Button, CardContent, CardHeader, CardActions, Typography, Container, List, ListItem, ListItemAvatar, Avatar, ListItemText, Tooltip, IconButton } from '@mui/material';
+import { Button, CardContent, CardHeader, CardActions, Typography, List, ListItem, ListItemAvatar, Avatar, ListItemText, Tooltip, IconButton } from '@mui/material';
 import { NavLink } from "react-router-dom";
 import React, { useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
@@ -27,11 +27,10 @@ const Memberships = ({ userId }) => {
         }
     }
 
-    console.log(userId, memberships[userId])
-
     const renderMemberships = (mems) => (
         <List>
             {Object.keys(mems)
+                .sort((a, b) => mems[a].start > mems[b].start ? 1 : -1)
                 .map((mid, i) => (
                     <ListItem key={mid}
                         secondaryAction={isAdmin ?

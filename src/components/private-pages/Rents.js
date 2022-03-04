@@ -14,10 +14,12 @@ import { useAdmin } from '../../contexts/AdminContext';
 
 const Rents = () => {
     const [onlyMyRents, setOnlyMyRents] = useState(true);
-    const { getRentsByUserId, deleteRent, myRents } = useData()
+    const { getRentsByUserId, myRents } = useData()
     const { currentUser, isAdmin } = useAuth()
-    const { getAllRents, allRents } = useAdmin()
+    const { getAllRents, allRents, deleteRent } = useAdmin()
     const [loading, setLoading] = useState(true)
+
+    console.log(allRents)
 
     const handleSwitchChange = (e) => {
         setOnlyMyRents(e.target.checked)
@@ -31,20 +33,13 @@ const Rents = () => {
         }
     }
 
-    const fetchRents = async () => {
-        if (isAdmin) {
-            await getAllRents()
-        } else {
-            await getRentsByUserId(currentUser.uid)
-        }
-        setLoading(false)
-    }
+
 
     const renderListItem = (r, i) => (
         <ListItem key={r.id}
             secondaryAction={isAdmin ?
                 <Tooltip title='Spiel mit Gast löschen' placement='top'>
-                    <IconButton edge="end" aria-label='delete' data-id={r.id} onClick={() => handleDeleteClick(r.id)}>
+                    <IconButton edge="end" aria-label='delete' data-id={r.id} onClick={() => handleDeleteClick(r.path)}>
                         <DeleteIcon />
                     </IconButton>
                 </Tooltip> : null
@@ -65,8 +60,22 @@ const Rents = () => {
     )
 
     useEffect(() => {
+        let isCancelled = false
+        const fetchRents = async () => {
+            if (isAdmin && !isCancelled) {
+                await getAllRents()
+            }
+            if (!isAdmin && !isCancelled) {
+                await getRentsByUserId(currentUser.uid)
+            }
+            if (!isCancelled)
+                setLoading(false)
+        }
         fetchRents()
-    }, []) // eslint-disable-line
+        return () => {
+            isCancelled = true
+        }
+    }, [])
 
 
     return loading ? <Loading /> : <PageWrapper backgroundColor={true} style={{ flexDirection: 'column' }}>

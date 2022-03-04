@@ -15,6 +15,8 @@ const cors = require('cors')({
     methods: ['POST']
 })
 
+exports.cors = cors
+
 exports.middleware = (handler) => (req, res) => {
     return cors(req, res, () => {
         functions.logger.log('Check if request is authorized with Firebase ID token');

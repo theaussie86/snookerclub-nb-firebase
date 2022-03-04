@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
 
 function RequireAdmin({ children }) {
-    let { isAdmin } = useAuth()
+    const { isAdmin } = useAuth()
 
     if (!isAdmin) {
         return <Navigate to='/dashboard' replace />

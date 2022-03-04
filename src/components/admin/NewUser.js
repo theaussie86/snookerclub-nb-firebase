@@ -1,17 +1,16 @@
 import { Alert, Button, CardActions, CardHeader, TextField, Link } from '@mui/material'
 import React, { useState } from 'react'
 import PageWrapper from '../layout/PageWrapper'
-import { useTheme } from "@emotion/react";
-import { useAuth } from '../../contexts/AuthContext';
 import { NavLink } from "react-router-dom";
 import FormCard from '../modules/FormCard';
 import FormCardContent from '../modules/FormCardContent';
+import { useAdmin } from '../../contexts/AdminContext';
 
 function NewUser() {
-    const theme = useTheme()
 
-    const { createUser } = useAuth()
+    const { createUser } = useAdmin()
     const [error, setError] = useState('')
+    const [message, setMessage] = useState('')
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -20,11 +19,11 @@ function NewUser() {
         try {
 
             const link = await createUser({
-                displayname: username.value,
+                displayName: username.value,
                 email: email.value,
                 origin: window.location.origin
             })
-            console.log('Weiter zum Detailbildschirm des neuen Mitlgieds...', link)
+            setMessage('Mitglied wurde angelegt')
 
         } catch (error) {
             console.log(error)
@@ -33,11 +32,12 @@ function NewUser() {
     }
 
     return (
-        <PageWrapper className='page' backgroundColor={theme.palette.primary.light}>
+        <PageWrapper className='page' backgroundColor={true}>
             <FormCard component='form' onSubmit={handleSubmit}>
                 <CardHeader title='Neues Mitglied anlegen' />
                 <FormCardContent>
                     {error && <Alert severity='error'>{error}</Alert>}
+                    {message && <Alert severity='success'>{message}</Alert>}
                     <TextField
                         id='email'
                         label='E-Mail-Adresse'
@@ -57,7 +57,7 @@ function NewUser() {
                         name='username'
                     />
                 </FormCardContent>
-                <CardActions style={{ justifyContent: 'space-between' }}>
+                <CardActions style={{ justifyContent: 'space-between', padding: '1rem' }}>
                     <Button
                         color='primary'
                         variant='contained'

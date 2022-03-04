@@ -1,14 +1,11 @@
 import { Alert, Button, CardActions, CardHeader, TextField, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import PageWrapper from '../layout/PageWrapper'
-import { useTheme } from "@emotion/react";
 import { useAuth } from '../../contexts/AuthContext';
 import { useNavigate } from "react-router-dom";
 import FormCard from '../modules/FormCard';
 import FormCardContent from '../modules/FormCardContent';
 
-function ActivateUser() {
-    const theme = useTheme()
+function ActivateUser({ params }) {
     const navigate = useNavigate()
 
     const { checkSignInLink, signInWithLink } = useAuth()
@@ -34,35 +31,33 @@ function ActivateUser() {
     }
 
     return (
-        <PageWrapper className='page' backgroundColor={true}>
-            <FormCard onSubmit={handleSubmit}>
-                <CardHeader title='Konto aktivieren' />
-                <Typography paragraph style={{ padding: '1rem' }}>Gib hier nochmal deine E-Mail-Adresse ein,<br /> um dein Konto zu aktivieren.</Typography>
-                <FormCardContent>
-                    {error && <Alert severity='error'>{error}</Alert>}
-                    <TextField
-                        id='email'
-                        label='E-Mail-Adresse'
-                        variant='standard'
-                        type='email'
-                        required
-                        margin='normal'
-                        color='primary'
-                        name='email'
-                    />
-                </FormCardContent>
-                <CardActions style={{ padding: '1rem' }}>
-                    <Button
-                        color='primary'
-                        variant='contained'
-                        type='submit'
-                        disabled={disabled}
-                    >
-                        Aktivieren
-                    </Button>
-                </CardActions>
-            </FormCard>
-        </PageWrapper>
+        <FormCard onSubmit={handleSubmit}>
+            <CardHeader title='Konto aktivieren' />
+            <Typography paragraph style={{ padding: '1rem' }}>Gib hier nochmal deine E-Mail-Adresse ein,<br /> um dein Konto zu aktivieren.</Typography>
+            <FormCardContent>
+                {error && <Alert severity='error'>{error}</Alert>}
+                <TextField
+                    id='email'
+                    label='E-Mail-Adresse'
+                    variant='standard'
+                    type='email'
+                    required
+                    margin='normal'
+                    color='primary'
+                    name='email'
+                />
+            </FormCardContent>
+            <CardActions style={{ padding: '1rem' }}>
+                <Button
+                    color='primary'
+                    variant='contained'
+                    type='submit'
+                    disabled={disabled}
+                >
+                    Aktivieren
+                </Button>
+            </CardActions>
+        </FormCard>
     )
 }
 

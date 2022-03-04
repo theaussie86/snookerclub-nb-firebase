@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PageWrapper from '../layout/PageWrapper';
 import FormCard from '../modules/FormCard';
+import FormCardContent from '../modules/FormCardContent';
 import DatePicker from "@mui/lab/DatePicker";
 import TimePicker from "@mui/lab/TimePicker";
 import { useAuth } from '../../contexts/AuthContext';
@@ -80,9 +81,10 @@ const NewRent = () => {
     }
 
     const handleInputChange = (e) => {
-        console.log(e.target)
         if (e.target.name === 'player1') setPlayer1(e.target.value)
         if (e.target.name === 'player2') setPlayer2(e.target.value)
+        if (e.target.name === 'start') setStart(moment(e.target.value, 'HH:mm').toDate())
+        if (e.target.name === 'end') setEnd(moment(e.target.value, 'HH:mm').toDate())
     }
 
     useEffect(() => {
@@ -95,7 +97,7 @@ const NewRent = () => {
     return <PageWrapper backgroundColor={true}>
         <FormCard onSubmit={handleSubmit}>
             <CardHeader title="Gast abrechnen" />
-            <CardContent>
+            <FormCardContent>
                 <Container disableGutters style={{ marginBottom: '1rem' }}>
                     {error && <Alert severity='error'>{error}</Alert>}
                     {(duration && price) && <Alert severity='info'>{`Ihr habt ${duration} für ${formatMoney(price / 100, 2)} gespielt`}</Alert>}
@@ -141,16 +143,19 @@ const NewRent = () => {
                         defaultValue={player2}
                         onBlur={handleInputChange}
                         required
-                        inputProps={{ tabIndex: 1 }}
+                    // inputProps={{ tabIndex: 1 }}
                     />
                     <TimePicker
                         label="Startzeit"
                         value={start}
                         onChange={(newValue) => handleTimeChange(newValue, 'start')}
                         getClockLabelText={(view) => prevView = view}
+                        // inputProps={{ tabIndex: 1 }}
                         renderInput={(params) => <TextField
                             required
+                            name='start'
                             variant='standard'
+                            onBlur={handleInputChange}
                             style={{ marginTop: '1rem', marginBottom: '0.5rem' }}
                             {...params}
                         />}
@@ -160,15 +165,18 @@ const NewRent = () => {
                         value={end}
                         onChange={(newValue) => handleTimeChange(newValue, 'end')}
                         getClockLabelText={(view) => prevView = view}
+                        // inputProps={{ tabIndex: 1 }}
                         renderInput={(params) => <TextField
                             required
+                            name='end'
                             variant='standard'
+                            onBlur={handleInputChange}
                             style={{ marginTop: '1rem', marginBottom: '0.5rem' }}
                             {...params}
                         />}
                     />
                 </Container>
-                <CardActions style={{ justifyContent: 'space-between' }}>
+                <CardActions style={{ justifyContent: 'space-between', padding: '1rem' }}>
                     <Button
                         color='primary'
                         variant='contained'
@@ -178,7 +186,7 @@ const NewRent = () => {
                     </Button>
                     <Link onClick={goback}>Zurück</Link>
                 </CardActions>
-            </CardContent>
+            </FormCardContent>
         </FormCard>
     </PageWrapper>;
 };

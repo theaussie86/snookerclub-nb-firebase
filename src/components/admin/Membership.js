@@ -6,6 +6,7 @@ import { useAdmin } from '../../contexts/AdminContext';
 import PageWrapper from '../layout/PageWrapper';
 import FormCard from '../modules/FormCard';
 import config from "../../util/config";
+import { setDate } from "../../util/helpers";
 import _ from 'lodash'
 
 const Membership = () => {
@@ -59,13 +60,14 @@ const Membership = () => {
 
     useEffect(() => {
         if (membershipId && userId && !_.isEmpty(memberships) && memberships[userId][membershipId].start) {
-            setStartDate(new Date(memberships[userId][membershipId].start.seconds * 1000))
+            setStartDate(setDate(memberships[userId][membershipId].start.seconds, true))
+            setType(memberships[userId][membershipId].type)
         }
     }, [membershipId, userId, memberships]);
 
     useEffect(() => {
         if (membershipId && userId && !_.isEmpty(memberships) && memberships[userId][membershipId].end) {
-            setEndDate(new Date(memberships[userId][membershipId].end.seconds * 1000))
+            setEndDate(setDate(memberships[userId][membershipId].end.seconds, true))
         }
     }, [membershipId, userId, memberships]);
 

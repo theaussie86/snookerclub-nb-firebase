@@ -8,7 +8,9 @@ import { useForm } from 'react-hook-form'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import Loading from '../modules/Loading'
 import Memberships from '../modules/Memberships'
+import { useAdmin } from '../../contexts/AdminContext'
 
+const admins = process.env.REACT_APP_SUPER_ADMINS.split(',')
 
 function MyProfile() {
 
@@ -19,6 +21,8 @@ function MyProfile() {
         updateUserData,
         updateUserPhoneNumber,
     } = useAuth()
+
+    const { createBills } = useAdmin()
 
     const [searchParams, setSearchParams] = useSearchParams() // eslint-disable-line
     const navigate = useNavigate()
@@ -35,18 +39,7 @@ function MyProfile() {
         setInfo(m)
     }, [searchParams])
 
-    const { register, handleSubmit } = useForm({
-        defaultValues: currentUser ? {
-            username: currentUser.displayName,
-            email: currentUser.email,
-            phone: currentUser.phoneNumber,
-            firstname: currentUser.additionalData.firstname,
-            lastname: currentUser.additionalData.lastname,
-            street: currentUser.additionalData.street,
-            zip: currentUser.additionalData.zip,
-            city: currentUser.additionalData.city
-        } : {}
-    })
+    const { register, handleSubmit, setValue } = useForm({})
 
     const goBack = () => navigate(-1)
 
@@ -116,12 +109,40 @@ function MyProfile() {
         if (error.password) setPwError(error.password.message)
     })
 
-    console.log(currentUser)
+    const handleClick = async () => {
+        console.log('Rechnungen erstellen')
+        try {
+            const res = await createBills()
+            console.log(res)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    useEffect(() => {
+        if (currentUser.additionalData) {
+            setValue('username', currentUser.displayName)
+            setValue('email', currentUser.email)
+            setValue('phone', currentUser.phoneNumber)
+            setValue('firstname', currentUser.additionalData.firstname)
+            setValue('lastname', currentUser.additionalData.lastname)
+            setValue('street', currentUser.additionalData.street)
+            setValue('zip', currentUser.additionalData.zip)
+            setValue('city', currentUser.additionalData.city)
+        }
+
+    }, [currentUser.additionalData, currentUser]) //eslint-disable-line
 
     return currentUser ? (
         <PageWrapper backgroundColor={true} style={{ flexDirection: 'column' }}>
             <FormCard onSubmit={handleFormSubmit} style={{ margin: '2rem 0', alignSelf: 'stretch' }}>
-                <CardHeader title='Meine Benutzerdaten' />
+                <CardHeader
+                    title='Meine Benutzerdaten'
+                    action={(currentUser && admins.indexOf(currentUser.uid) > -1)
+                        ? <Button variant='contained' onClick={handleClick}>Rechnungen erstellen</Button>
+                        : null
+                    }
+                />
                 <CardContent>
                     <Container>
                         {error && <Alert severity='error'>{error}</Alert>}
@@ -251,7 +272,6 @@ function MyProfile() {
                                     value: 8,
                                     message: 'Passwort muss mindestens 8 Zeichen lang sein.'
                                 },
-
                             })}
                             label='Passwort'
                             variant='standard'

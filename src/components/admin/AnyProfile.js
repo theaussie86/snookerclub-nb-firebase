@@ -10,7 +10,6 @@ import { useAdmin } from '../../contexts/AdminContext'
 import Loading from '../modules/Loading'
 import Memberships from '../modules/Memberships'
 
-
 function AnyProfile() {
 
     const { currentUser,
@@ -21,7 +20,7 @@ function AnyProfile() {
         updateUserPhoneNumber,
     } = useAuth()
 
-    const { users } = useAdmin()
+    const { users, setUsers, setAsAdmin, deleteAdminRights } = useAdmin()
     // eslint-disable-next-line
     const [searchParams, setSearchParams] = useSearchParams()
     const { userId } = useParams()
@@ -39,18 +38,7 @@ function AnyProfile() {
         setInfo(m)
     }, [searchParams])
 
-    const { register, handleSubmit } = useForm({
-        defaultValues: users[userId] ? {
-            username: users[userId].displayName,
-            email: users[userId].email,
-            phone: users[userId].phoneNumber,
-            firstname: users[userId].additionalData.firstname,
-            lastname: users[userId].additionalData.lastname,
-            street: users[userId].additionalData.street,
-            zip: users[userId].additionalData.zip,
-            city: users[userId].additionalData.city
-        } : {}
-    })
+    const { register, handleSubmit, setValue } = useForm({})
 
     const goBack = () => navigate(-1)
 
@@ -120,10 +108,51 @@ function AnyProfile() {
         if (error.password) setPwError(error.password.message)
     })
 
+    const handleDoubleClick = async () => {
+        console.log(users[userId])
+        try {
+            let res
+            if (!users[userId].customClaims) {
+                res = await setAsAdmin(userId)
+                setUsers(prevUsers => {
+                    prevUsers[userId].customClaims = { admin: true }
+                    return prevUsers
+                })
+            } else {
+                res = await deleteAdminRights(userId)
+                setUsers(prevUsers => {
+                    delete prevUsers[userId].customClaims
+                    return prevUsers
+                })
+            }
+            console.log(res)
+            setMessage(res.data)
+        } catch (error) {
+            console.error(error)
+            setError('Du bist kein Superadmin und kannst keine Adminrechte verwalten.')
+        }
+    }
+
+    useEffect(() => {
+        if (users[userId]) {
+            setValue('username', users[userId].displayName)
+            setValue('email', users[userId].email)
+            setValue('phone', users[userId].phoneNumber)
+            setValue('firstname', users[userId].additionalData.firstname)
+            setValue('lastname', users[userId].additionalData.lastname)
+            setValue('street', users[userId].additionalData.street)
+            setValue('zip', users[userId].additionalData.zip)
+            setValue('city', users[userId].additionalData.city)
+        }
+    }, [users, userId])//eslint-disable-line
+
     return users[userId] ? (
         <PageWrapper backgroundColor={true} style={{ flexDirection: 'column', padding: '2rem 0' }}>
             <FormCard onSubmit={handleFormSubmit}>
-                <CardHeader title='Meine Benutzerdaten' />
+                <CardHeader
+                    title={users[userId].displayName ? 'Benutzerdaten von ' + users[userId].displayName : 'Benutzerdaten'}
+                    onDoubleClick={handleDoubleClick}
+                />
                 <CardContent>
                     <Container>
                         {error && <Alert severity='error'>{error}</Alert>}

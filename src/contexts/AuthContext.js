@@ -23,7 +23,6 @@ import {
     collection
 } from 'firebase/firestore'
 import app from "../firebase";
-import axios from 'axios';
 import Loading from '../components/modules/Loading';
 
 const AuthContext = createContext()
@@ -37,6 +36,7 @@ export function AuthProvider({ children }) {
     const [currentMemberships, setCurrentMemberships] = useState({});
     const [isAdmin, setIsAdmin] = useState(false)
     const [loading, setLoading] = useState(true)
+    const [headers, setHeaders] = useState()
     const auth = getAuth(app)
     const db = getFirestore(app)
 
@@ -96,12 +96,6 @@ export function AuthProvider({ children }) {
         return updatePassword(currentUser, password)
     }
 
-    const createUser = (user) => {
-        return axios.post('https://europe-west1-snookerclub-nb.cloudfunctions.net/createUser', {
-            ...user
-        })
-    }
-
     const updateUserProfile = (updateData, user = currentUser) => {
         return updateProfile(user, updateData)
     }
@@ -137,13 +131,12 @@ export function AuthProvider({ children }) {
             if (user) {
                 const tokenResult = await user.getIdTokenResult()
                 setIsAdmin(tokenResult.claims.admin === true)
+                setHeaders({ Authorization: 'Bearer ' + user.accessToken })
                 const data = await getUserDataById(user.uid)
                 if (data) {
-                    // console.log(snapshot.data())
-                    const additionalUserData = data
                     setCurrentUser(prevUser => {
                         // console.log(prevUser)
-                        prevUser.additionalData = additionalUserData
+                        prevUser.additionalData = data
                         return prevUser
                     })
                 }
@@ -161,12 +154,12 @@ export function AuthProvider({ children }) {
         currentUser,
         currentMemberships,
         isAdmin,
+        headers,
         login,
         logout,
         resetPassword,
         updateUserEmail,
         updateUserPassword,
-        createUser,
         updateUserProfile,
         updateUserData,
         checkSignInLink,
