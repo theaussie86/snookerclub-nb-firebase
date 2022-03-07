@@ -1,6 +1,5 @@
-import { Accordion, AccordionDetails, AccordionSummary, Button, CardContent, CardHeader, List, ListItem, Switch, Typography } from '@mui/material'
+import { Accordion, AccordionDetails, AccordionSummary, Button, CardContent, CardHeader, MenuItem, TextField, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
-import { NavLink } from 'react-router-dom'
 import PageWrapper from '../layout/PageWrapper'
 import ClubCard from '../modules/ClubCard'
 import Loading from '../modules/Loading'
@@ -9,30 +8,37 @@ import { formatDate, formatMoney, formatDuration, calcRentAsCents, getDueDate } 
 import { useAuth } from '../../contexts/AuthContext'
 import { BillDownloadButton } from '../modules/BillDownloadButton'
 import { useData } from '../../contexts/DataContext'
+import { useAdmin } from '../../contexts/AdminContext'
+import _ from 'lodash'
 
 export const Bills = () => {
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [expanded, setExpanded] = useState(false)
-    const [error, setError] = useState('')
     const { currentUser, isAdmin } = useAuth()
+    const { users } = useAdmin()
     const { myBills, getBillsByUserId } = useData()
+    const [selectedUser, setSelectedUser] = useState(currentUser.uid)
 
     useEffect(() => {
         let isCancelled = false
         const fetchBills = async () => {
             if (!isCancelled)
-                await getBillsByUserId()
+                await getBillsByUserId(selectedUser)
+            setLoading(false)
         }
         fetchBills()
         return () => {
             isCancelled = true
         }
-    }, [])//eslint-disable-line
-
-    console.log(myBills.length && myBills[0].billDate.toDate())
+    }, [selectedUser])//eslint-disable-line
 
     const handleChange = (bid) => (event, isExpanded) => {
         setExpanded(isExpanded ? bid : false)
+    }
+
+    const handleUserChange = (e) => {
+        console.log(e.target.value, users[e.target.value].displayName)
+        setSelectedUser(e.target.value)
     }
 
     const sortFunction = (a, b) => a.billDate > b.billDate ? -1 : 1
@@ -40,10 +46,25 @@ export const Bills = () => {
     return loading ? <Loading />
         : <PageWrapper backgroundColor={true} style={{ flexDirection: 'column' }}>
             <ClubCard style={{
-                backgroundColor: expanded ? 'grey.200' : 'background.default'
+                backgroundColor: expanded ? 'grey.200' : 'background.default',
+                '& .MuiCardHeader-action': { m: 0 }
             }}>
                 <CardHeader
-                    title='Meine Rechnungen'
+                    title={selectedUser === currentUser.uid ? 'Meine Rechnungen' : 'Rechnungen'}
+                    action={isAdmin &&
+                        <TextField
+                            id='sc-bills-user-select'
+                            select
+                            sx={{ minWidth: '10rem' }}
+                            label='Mitglied'
+                            value={selectedUser}
+                            onChange={handleUserChange}
+                        >{users && Object.keys(users).map(uid =>
+                            <MenuItem key={uid} value={uid}>
+                                {users[uid].displayName}
+                            </MenuItem>
+                        )}</TextField>
+                    }
                 />
                 <CardContent >
                     {
@@ -67,7 +88,7 @@ export const Bills = () => {
                                             width: '100%'
                                         }}>
                                             <Typography>
-                                                {currentUser.displayName}
+                                                {(isAdmin && !_.isEmpty(users)) ? users[bill._member].displayName : currentUser.displayName}
                                             </Typography>
                                             <Typography>
                                                 {formatDate(bill.billDate.toDate(), 'MMMM YYYY')}
@@ -98,7 +119,7 @@ export const Bills = () => {
                                                 </div>)
                                                 : <Typography paragraph
                                                 >
-                                                    Du hast diesen Monat nicht mit Gästen gespielt.
+                                                    {selectedUser === currentUser.uid ? 'Du hast' : `${users[selectedUser].displayName} hat`} diesen Monat nicht mit Gästen gespielt.
                                                 </Typography>}
                                         </div>
                                         <Typography paragraph fontWeight='bold' marginTop='1rem'>

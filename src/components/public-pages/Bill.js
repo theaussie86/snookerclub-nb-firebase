@@ -24,7 +24,8 @@ export const Bill = () => {
         if (!bill)
             fetchBill()
 
-        return () => { isCanceled = true }
+        return () => isCanceled = true //eslint-disable-line
+
     }, [content, iv, tag, getBillFromLink, bill])
 
     return (

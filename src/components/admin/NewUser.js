@@ -18,7 +18,7 @@ function NewUser() {
 
         try {
 
-            const link = await createUser({
+            await createUser({
                 displayName: username.value,
                 email: email.value,
                 origin: window.location.origin

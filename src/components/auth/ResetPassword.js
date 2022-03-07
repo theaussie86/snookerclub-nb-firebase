@@ -1,4 +1,4 @@
-import { Alert, Button, CardActions, CardHeader, TextField, Typography } from '@mui/material'
+import { Alert, Button, CardActions, CardHeader, } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/AuthContext'
@@ -54,7 +54,7 @@ export const ResetPassword = ({ params }) => {
         return () => {
             isCanceled = true
         }
-    }, [])
+    }, [])//eslint-disable-line
 
     return (
         <FormCard onSubmit={handleSubmit}>

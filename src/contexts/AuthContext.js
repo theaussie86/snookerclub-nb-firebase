@@ -88,11 +88,11 @@ export function AuthProvider({ children }) {
         return confirmPasswordReset(auth, code, password)
     }
 
-    const updateUserEmail = (email) => {
+    const updateUserEmail = (email, user = currentUser) => {
         return updateEmail(auth.currentUser, email)
     }
 
-    const updateUserPassword = (password) => {
+    const updateUserPassword = (password, user = currentUser) => {
         return updatePassword(currentUser, password)
     }
 

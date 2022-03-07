@@ -5,7 +5,7 @@ import { ResetPassword } from './ResetPassword';
 import ActivateUser from './ActivateUser';
 
 function AccountManagement() {
-    const [searchParams, setSearchParams] = useSearchParams()
+    const [searchParams, setSearchParams] = useSearchParams()//eslint-disable-line
     const params = { 'mode': null, 'oobCode': null, 'apiKey': null, 'lang': null, 'continueUrl': null }
 
     for (let p of Object.keys(params)) {

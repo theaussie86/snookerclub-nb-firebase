@@ -12,12 +12,9 @@ import Memberships from '../modules/Memberships'
 
 function AnyProfile() {
 
-    const { currentUser,
-        updateUserEmail,
+    const {
         updateUserPassword,
-        updateUserProfile,
         updateUserData,
-        updateUserPhoneNumber,
     } = useAuth()
 
     const { users, setUsers, setAsAdmin, deleteAdminRights } = useAdmin()
@@ -52,7 +49,7 @@ function AnyProfile() {
 
     const handleFormSubmit = handleSubmit((data) => {
         console.log(data)
-        const { username, email, phone, password, password2, firstname, lastname, street, zip, city } = data
+        const { password, password2, firstname, lastname, street, zip, city } = data
         const promises = []
         setMessage('')
         setError('')
@@ -62,36 +59,36 @@ function AnyProfile() {
             if (password !== password2) {
                 return setPw2Error('Passwörter sind nicht gleich')
             }
-            promises.push(updateUserPassword(password))
+            promises.push(updateUserPassword(password, users[userId]))
         }
 
-        if (email !== currentUser.email) {
-            promises.push(updateUserEmail(email))
-        }
+        // if (email !== users[userId].email) {
+        //     promises.push(updateUserEmail(email, users[userId]))
+        // }
 
-        if (phone !== currentUser.phoneNumber) {
-            promises.push(updateUserPhoneNumber(phone))
-        }
+        // if (phone !== currentUser.phoneNumber) {
+        //     promises.push(updateUserPhoneNumber(phone))
+        // }
 
-        if (username !== currentUser.displayName) {// addon PhotoUrl once applicable
-            const updateAuthData = {}
-            if (username !== currentUser.displayName) updateAuthData.displayName = username
-            promises.push(updateUserProfile(updateAuthData))
-        }
+        // if (username !== users[userId].displayName) {// addon PhotoUrl once applicable
+        //     const updateAuthData = {}
+        //     if (username !== users[userId].displayName) updateAuthData.displayName = username
+        //     promises.push(updateUserProfile(updateAuthData, users[userId]))
+        // }
 
-        if (firstname !== currentUser.additionalData.firstname ||
-            lastname !== currentUser.additionalData.lastname ||
-            street !== currentUser.additionalData.street ||
-            zip !== currentUser.additionalData.zip ||
-            city !== currentUser.additionalData.city
+        if (firstname !== users[userId].additionalData.firstname ||
+            lastname !== users[userId].additionalData.lastname ||
+            street !== users[userId].additionalData.street ||
+            zip !== users[userId].additionalData.zip ||
+            city !== users[userId].additionalData.city
         ) {
             const updateData = {}
-            if (firstname !== currentUser.additionalData.firstname) updateData.firstname = firstname
-            if (lastname !== currentUser.additionalData.lastname) updateData.lastname = lastname
-            if (street !== currentUser.additionalData.street) updateData.street = street
-            if (zip !== currentUser.additionalData.zip) updateData.zip = zip
-            if (city !== currentUser.additionalData.city) updateData.city = city
-            promises.push(updateUserData(updateData))
+            if (firstname !== users[userId].additionalData.firstname) updateData.firstname = firstname
+            if (lastname !== users[userId].additionalData.lastname) updateData.lastname = lastname
+            if (street !== users[userId].additionalData.street) updateData.street = street
+            if (zip !== users[userId].additionalData.zip) updateData.zip = zip
+            if (city !== users[userId].additionalData.city) updateData.city = city
+            promises.push(updateUserData(updateData, userId))
         }
 
         Promise.all(promises).then(() => {
@@ -180,6 +177,7 @@ function AnyProfile() {
                                 margin='normal'
                                 color='primary'
                                 name='username'
+                                disabled
                             />
                             <TextField
                                 {...register('email')}
@@ -190,6 +188,7 @@ function AnyProfile() {
                                 color='primary'
                                 name='email'
                                 type='email'
+                                disabled
                             />
                             {/*<TextField
                                 {...register('phone')}

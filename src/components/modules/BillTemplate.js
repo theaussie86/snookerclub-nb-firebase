@@ -1,11 +1,9 @@
-import { convertLength } from '@mui/material/styles/cssUtils';
 import { Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/renderer'
 import { Timestamp } from 'firebase/firestore';
 import _ from 'lodash';
-import moment from 'moment';
-import React, { useEffect, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import config from '../../util/config';
-import { calcRentAsCents, formatDate, formatMoney, formatDuration, getDueDate, convertTimestampToMoment } from '../../util/helpers';
+import { calcRentAsCents, formatDate, formatMoney, formatDuration, getDueDate } from '../../util/helpers';
 
 Font.register({
     family: 'Quicksand',
@@ -74,8 +72,6 @@ export const BillTemplate = ({ data }) => {
     const visitorSales = useMemo(() => !_.isEmpty(data) ? data.bill.visitorSales : 0, [data])
     const rents = useMemo(() => !_.isEmpty(data) ? data.bill.rents : [], [data])
     const user = useMemo(() => !_.isEmpty(data) ? data.user : [], [data])
-
-    console.log(billDate instanceof Timestamp)
 
     return (
         <Document

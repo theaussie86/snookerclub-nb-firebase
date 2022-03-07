@@ -1,5 +1,4 @@
-import { Button } from '@mui/material';
-import { Document, Page, Text, View, StyleSheet, PDFDownloadLink } from '@react-pdf/renderer';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import React from 'react'
 import { BillTemplate } from './BillTemplate';
 
@@ -12,7 +11,6 @@ export const BillDownloadButton = (props) => {
             style={{ color: 'inherit', textDecoration: 'none' }}
         >
             {({ blob, url, loading, error }) => {
-                console.log(blob, url)
                 return 'Jetzt herunterladen'
             }}
         </PDFDownloadLink>

@@ -75,7 +75,7 @@ const Rents = () => {
         return () => {
             isCancelled = true
         }
-    }, [])
+    }, [])//eslint-disable-line
 
 
     return loading ? <Loading /> : <PageWrapper backgroundColor={true} style={{ flexDirection: 'column' }}>
