@@ -7,4 +7,5 @@ admin.initializeApp();
 //
 
 exports.https = require('./functions/https')
-// exports.timed = require('./functions/timed')
+exports.timed = require('./functions/timed')
+// exports.import = require('./functions/import')

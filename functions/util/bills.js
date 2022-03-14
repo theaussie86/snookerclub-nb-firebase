@@ -1,3 +1,4 @@
+const functions = require('firebase-functions')
 const admin = require('firebase-admin')
 const { encrypt } = require('./crypto')
 const { convertTimestampToMoment, calcRentAsCents, getMembershipFeeOfFollowingMembership } = require('../util/helpers')
@@ -91,7 +92,7 @@ module.exports = {
                 .filter(b => !b.membershipFee)
                 .map(b => convertTimestampToMoment(b.billDate).endOf('month').format('DD.MM.YYYY'))
                 : []
-
+            functions.logger.info(user)
             for (let mem of memberships) {
 
                 let start = convertTimestampToMoment(mem.start).hour(12)
@@ -155,7 +156,6 @@ module.exports = {
     finalizeBillWithRents: (data, path, username, email, uid, billDate) => {
 
         const id = path.split('/')[path.split('/').length - 1]
-        console.log(id, uid)
         const hash = encrypt(uid + ',' + id)
         const link = `https://snooker-nb.de/bills/${hash.content}/${hash.iv}/${hash.tag}`
         const options = mailOptions.getBillsMailOptions(username, link, billDate)

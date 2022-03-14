@@ -14,7 +14,6 @@ import MyProfile from './components/private-pages/MyProfile';
 import AnyProfile from './components/admin/AnyProfile';
 import NewUser from './components/admin/NewUser';
 import RequireAdmin from './components/admin/RequireAdmin';
-import ActivateUser from './components/auth/ActivateUser';
 import SetPassword from './components/auth/SetPassword';
 import AllUsers from './components/admin/AllUsers';
 import { AdminProvider } from './contexts/AdminContext';
@@ -43,7 +42,6 @@ function App() {
                   <Route path='/forgot-password' element={<ForgotPassword />} />
                   <Route path='datenschutz' element={<Datenschutz />} />
                   <Route path='impressum' element={<Impressum />} />
-                  <Route path='activate' element={<ActivateUser />} />
                   <Route path='manage' element={<AccountManagement />} />
                   <Route path='*' element={<NotFound />} />
                   <Route path='dashboard' element={

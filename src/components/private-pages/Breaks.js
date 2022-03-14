@@ -67,7 +67,7 @@ const Breaks = () => {
                                     <UserAvatar alt={br.player}>{br.player[0]}</UserAvatar>
                                 </ListItemAvatar>
                                 <ListItemText primary={`${br['break']} von ${br.player}`}
-                                    secondary={`gespielt am ${formatDate(br.datum)}`} />
+                                    secondary={`gespielt am ${formatDate(br.datum.toDate())}`} />
                             </ListItem>
                         ))}
                 </List>

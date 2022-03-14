@@ -46,7 +46,7 @@ function SignedInDesktopLinks() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
             >
-                {userSettings.map((setting) => (
+                {userSettings.filter(p => !p.admin || p.admin === isAdmin).map((setting) => (
                     <MenuItem key={setting.title} component={setting.title !== 'Logout' ? NavLink : Link} to={setting.title !== 'Logout' ? setting.to : ''} onClick={setting.title === 'Logout' ? logout : handleCloseUserMenu}>
                         <Typography textAlign="center">{setting.title}</Typography>
                     </MenuItem>

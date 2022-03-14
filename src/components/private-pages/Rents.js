@@ -10,16 +10,12 @@ import Loading from '../modules/Loading';
 import ClubCard from '../modules/ClubCard'
 import { useAdmin } from '../../contexts/AdminContext';
 
-
-
 const Rents = () => {
     const [onlyMyRents, setOnlyMyRents] = useState(true);
     const { getRentsByUserId, myRents } = useData()
     const { currentUser, isAdmin } = useAuth()
     const { getAllRents, allRents, deleteRent } = useAdmin()
     const [loading, setLoading] = useState(true)
-
-    console.log(allRents)
 
     const handleSwitchChange = (e) => {
         setOnlyMyRents(e.target.checked)
@@ -32,8 +28,6 @@ const Rents = () => {
             console.error(error)
         }
     }
-
-
 
     const renderListItem = (r, i) => (
         <ListItem key={r.id}

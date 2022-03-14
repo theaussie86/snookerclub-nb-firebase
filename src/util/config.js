@@ -30,7 +30,9 @@ const config = {
     axios: instance,
     membershipFees: {
         'Vollmitglied': 50,
-        'Vollmitglied_alt': 60
+        'Rentner': 30,
+        'Student': 30,
+        'Vollmitglied_alt': 60,
     }
 }
 

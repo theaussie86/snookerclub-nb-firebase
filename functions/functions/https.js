@@ -3,7 +3,7 @@ const admin = require('firebase-admin')
 const { middleware, cors } = require('../util/middleware.js')
 const { mailOptions, sendMail } = require('../util/mail-config')
 const { getAllUser, checkUsersBills, createBillWithoutRents, finalizeBillWithRents } = require('../util/bills')
-const { encrypt, decrypt } = require('../util/crypto.js')
+const { decrypt } = require('../util/crypto.js')
 const db = admin.firestore()
 const superAdminIds = functions.config().admin.superadmins.split(',')
 
@@ -55,7 +55,7 @@ exports.createBills = functions.region('europe-west1').https.onRequest(middlewar
 exports.createUser = functions.region('europe-west1').https.onRequest(middleware((req, res) => {
     if (!req.user.admin) res.status(403).send('Unauthorized - no admin')
     const actionCodeSettings = {
-        url: req.body.origin + "/activate",
+        url: req.body.origin + "/manage",
     };
     let user
     admin.auth().createUser({

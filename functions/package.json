@@ -4,6 +4,7 @@
   "scripts": {
     "lint": "eslint .",
     "serve": "firebase emulators:start --only functions",
+    "serve:import": "firebase emulators:start --only functions,firestore,auth",
     "serve:all": "firebase emulators:start",
     "shell": "firebase functions:shell",
     "start": "npm run shell",

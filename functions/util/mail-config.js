@@ -51,7 +51,6 @@ module.exports = {
             }
         });
 
-
         const mail = {
             auth: {
                 user: nodemailerConf.user,
