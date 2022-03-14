@@ -1,11 +1,32 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PageWrapper from '../layout/PageWrapper'
 import { useAdmin } from '../../contexts/AdminContext'
 import { Container, Avatar, List, ListItem, ListItemAvatar, ListItemButton, ListItemText, Typography, Paper } from '@mui/material'
 import { NavLink } from "react-router-dom";
 
 function AllUsers() {
-    const { users } = useAdmin()
+    const { users, getAllUsers } = useAdmin()
+
+    useEffect(() => {
+        let isCanceled = false
+        const fetchUsers = async () => {
+            try {
+                await getAllUsers()
+            } catch (error) {
+                console.error(error)
+            }
+        }
+
+        if (!isCanceled && !users.length) {
+            fetchUsers()
+        }
+
+        return () => {
+            isCanceled = true
+        }
+    }, [])//eslint-disable-line
+
+    console.log(users)
 
     return (
         <PageWrapper backgroundColor={true} style={{ flexDirection: 'column' }}>
@@ -22,7 +43,7 @@ function AllUsers() {
                             backgroundColor: 'var(--lt-color-background-light)',
                             borderRadius: 16,
                         }}>
-                            {Object.keys(users).filter(uid => users[uid].disabled === false).map((uid) => {
+                            {Object.keys(users).filter(uid => users[uid].emailVerified === true).map((uid) => {
                                 return (
                                     <ListItem key={uid} component={NavLink} to={"/profile/" + users[uid].uid} disablePadding>
                                         <ListItemButton>
@@ -54,7 +75,7 @@ function AllUsers() {
                             backgroundColor: 'var(--lt-color-background-light)',
                             borderRadius: 16,
                         }}>
-                            {Object.keys(users).filter(uid => users[uid].disabled === true).map((uid) => {
+                            {Object.keys(users).filter(uid => users[uid].emailVerified === false).map((uid) => {
                                 return (
                                     <ListItem key={uid} disablePadding>
                                         <ListItemButton>

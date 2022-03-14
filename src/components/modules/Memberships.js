@@ -54,7 +54,7 @@ const Memberships = ({ userId }) => {
                         </ListItemAvatar>
                         <ListItemText
                             primary={`${mems[mid].type}, Beitrag: ${formatMoney(mems[mid].fee)}`}
-                            secondary={`Beginn: ${formatDate(mems[mid].start)}${mems[mid].end ? ', Ende: ' + formatDate(mems[mid].end) : ''}`}
+                            secondary={`Beginn: ${formatDate(mems[mid].start.toDate())}${mems[mid].end ? ', Ende: ' + formatDate(mems[mid].end.toDate()) : ''}`}
                         />
                     </ListItem>
                 ))}

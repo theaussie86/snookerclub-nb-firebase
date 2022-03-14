@@ -46,7 +46,7 @@ const Rents = () => {
             für ${formatMoney(calcRentAsCents((r.end.seconds - r.start.seconds) * 1000, r.onlyGuests) / 100, 2)}
             `}
                 secondary={`
-                am ${formatDate(r.datum)} 
+                am ${formatDate(r.datum.toDate())} 
                 von ${formatTime(r.start)}
                 bis ${formatTime(r.end)}
                 `} />
