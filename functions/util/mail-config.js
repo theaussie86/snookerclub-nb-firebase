@@ -64,5 +64,18 @@ module.exports = {
         }
 
         smtpTransport.sendMail(mail)
-    }
+    },
+    getTestMailOptions: (username) => ({
+        subject: 'Testmail SnookerClub NB',
+        text: `Hallo ${username},\n
+                das ist ein Test.\n\n
+                Viele Grüße,\n
+                Snookerclub Neubrandenburg`,
+        html: `<p>Hallo <strong>${username}</strong>,<br> 
+                das ist ein Test
+                </p>
+                <p>Viele Grüße,<br>
+                Snookerclub Neubrandenburg
+                </p>`
+    })
 }

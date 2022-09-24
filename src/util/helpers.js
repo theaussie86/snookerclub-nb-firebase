@@ -79,7 +79,7 @@ export const formatDuration = (duration, unit = null, isShort = false) => {
     let str = h > 0 ? `${h} ${h === 1 ? 'Stunde' : 'Stunden'}` : ''
     str += m > 0 ? ` und ${m} ${m === 1 ? 'Minute' : 'Minuten'}` : ''
 
-    return isShort ? `${h > 0 && h + 'h'}${m > 0 && ' ' + m + 'min'}` : str
+    return isShort ? `${h > 0 && h + 'h'}${m > 0 ? ' ' + m + 'min' : ''}` : str
 }
 
 export const getDueDate = (billDate, pattern = 'DD.MM.YYYY') => {

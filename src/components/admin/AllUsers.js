@@ -26,8 +26,6 @@ function AllUsers() {
         }
     }, [])//eslint-disable-line
 
-    console.log(users)
-
     return (
         <PageWrapper backgroundColor={true} style={{ flexDirection: 'column' }}>
             <Typography variant='h1' marginBottom='3rem'>Mitglieder Übersicht</Typography>
