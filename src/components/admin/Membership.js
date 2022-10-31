@@ -99,6 +99,7 @@ const Membership = () => {
                             </MenuItem>
                             <MenuItem value='Vollmitglied'>Vollmitglied</MenuItem>
                             <MenuItem value='Vollmitglied_alt'>Vollmitglied alt</MenuItem>
+                            <MenuItem value='Vollmitglied_65'>Vollmitglied 65</MenuItem>
                         </Select>
                     </FormControl>
                     <TextField

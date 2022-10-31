@@ -16,6 +16,7 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "axios": "^0.24.0",
+    "caniuse-lite": "^1.0.30001427",
     "date-fns": "^2.28.0",
     "fast-equals": "^2.0.4",
     "firebase": "^9.6.1",

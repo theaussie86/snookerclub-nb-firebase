@@ -33,6 +33,7 @@ const config = {
         'Rentner': 30,
         'Student': 30,
         'Vollmitglied_alt': 60,
+        'Vollmitglied_65': 65
     }
 }
 
